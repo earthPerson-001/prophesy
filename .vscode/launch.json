@@ -1,0 +1,51 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'prophesy'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=prophesy",
+                    "--package=prophesy"
+                ],
+                "filter": {
+                    "name": "prophesy",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                // Turning on all the debug outputs in glib
+                "G_MESSAGES_DEBUG": "all",
+                // Turning on the backtracing in rust
+                "RUST_BACKTRACE": "1"
+            }
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'prophesy'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=prophesy",
+                    "--package=prophesy"
+                ],
+                "filter": {
+                    "name": "prophesy",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
