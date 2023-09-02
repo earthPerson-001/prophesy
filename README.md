@@ -42,3 +42,8 @@ Release: `cargo build --release`
 
 ### vscode
 Configurations are present in .vscode/launch.json .
+
+# References
+- [gtk-rs](https://gtk-rs.org/)
+- [gtk-rs-book](https://gtk-rs.org/gtk4-rs/stable/latest/book/)
+- [GNOME Developer Documentation](https://developer.gnome.org/documentation/introduction.html)
