@@ -3,7 +3,7 @@ use gtk::{prelude::*, Box};
 use gtk::{Button, Image, MenuButton, Stack, StackSidebar};
 use gtk::{HeaderBar, Label};
 
-use crate::load_historic_data::load_data;
+use crate::utils::load_historic_data::load_data;
 
 pub fn build_main_window(app_window: &ApplicationWindow) {
     // the title bar

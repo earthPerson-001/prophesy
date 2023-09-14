@@ -1,4 +1,3 @@
-mod imp;
 
 use glob::glob;
 use gtk::gio::prelude::*;

@@ -6,10 +6,10 @@ use gtk::gio;
 mod main_window;
 use main_window::build_main_window;
 
-mod load_historic_data;
-
-pub mod application_window;
+mod application_window;
 use application_window::ApplicationWindow;
+
+mod utils;
 
 // The application name
 const APPLICATION_NAME: &str = "Prophesy";
