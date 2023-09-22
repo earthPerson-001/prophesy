@@ -8,7 +8,9 @@ edition = "2021"
 
 [dependencies]
 glob = "0.3.1"  # for pattern matching in file systems
-gtk = { version = "0.7.2", package = "gtk4", features = ["v4_10"] }
+gtk = { version = "0.7.2", package = "gtk4", features = ["v4_12"] }
+starship-battery = "0.8.2"  # since this is used by terminal, it might get updated more often
+                            # and have more bugfixes (maybe)
 
 [build-dependencies]
 glib-build-tools = "0.18.0"
