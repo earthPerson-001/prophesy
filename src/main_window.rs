@@ -5,6 +5,8 @@ use gtk::{HeaderBar, Label};
 
 use crate::utils::load_historic_data::load_data;
 
+use starship_battery as battery;
+
 pub fn build_main_window(app_window: &ApplicationWindow) {
     // the title bar
 
@@ -33,28 +35,83 @@ pub fn build_main_window(app_window: &ApplicationWindow) {
     main_container.append(&stack);
 
     // Adding various sections
-    let sections = [
-        "Data Loading",
-        "Charging and Discharging History",
-        "Battery Health History",
-        "Charging and Discharging Prediction",
-        "Battery/Power Information",
-        "Suggestions",
-        "About",
-    ];
+    let sections = ["Dashboard", "History", "Suggestions", "About"];
 
-    // adding the data loading section
-    let data_loading_section_label = Label::new(Some("Loading the data"));
-    let data_loading_section_title = sections[0];
-    load_data();
+    // adding the dashboard section
+    let dashboard_section_title = sections[0];
+    let dashboard_container = Box::new(gtk::Orientation::Vertical, 10);
+
+    // using starship-battery to extract battery information
+    let manager = battery::Manager::new();
+
+    if let Ok(mgr) = manager {
+        for (idx, maybe_battery) in mgr.batteries().unwrap().enumerate() {
+            let battery = maybe_battery.unwrap();
+            dashboard_container.append(&Label::new(Some(format!("Battery #{}:", idx).as_str())));
+            dashboard_container.append(&Label::new(Some(
+                format!("Vendor: {:?}", battery.vendor()).as_str(),
+            )));
+            dashboard_container.append(&Label::new(Some(
+                format!("Model: {:?}", battery.model()).as_str(),
+            )));
+            dashboard_container.append(&Label::new(Some(
+                format!("State: {:?}", battery.state()).as_str(),
+            )));
+            if let Some(full_charge_time) = battery.time_to_full() {
+                dashboard_container.append(&Label::new(Some(
+                    format!("Time to full charge: {:?}", full_charge_time).as_str(),
+                )));
+            }
+            if let Some(time_to_emtpy) = battery.time_to_empty() {
+                dashboard_container.append(&Label::new(Some(
+                    format!("Time to emtpy: {:?}", time_to_emtpy).as_str(),
+                )));
+            }
+        }
+    }
+
+    // history section
+    let history_section_title = sections[1];
+    let history_container = Box::new(gtk::Orientation::Vertical, 10);
+
+    // getting the history
+    let files_and_data = load_data();
+
+    for (_file, entries) in files_and_data {
+        let file_path = _file.path().unwrap();
+        let file_name = file_path.file_name().unwrap().to_str().unwrap();
+        print!("{}", file_name);
+
+        for (dt, entry) in entries {
+            if dt != entry.date_time {
+                eprintln!(
+                    "key: {:?} and entry: {:?} aren't equal",
+                    dt, entry.date_time
+                );
+            }
+            dbg!(
+                "time: {}-{}-{} {}hr {}m {}s, value: {}, state: {:?}",
+                entry.date_time.year(),
+                entry.date_time.month(),
+                entry.date_time.day_of_month(),
+                entry.date_time.hour(),
+                entry.date_time.minute(),
+                entry.date_time.seconds(),
+                entry.value,
+                entry.charge_state
+            );
+        }
+    }
+
     stack
-        .add_named(
-            &data_loading_section_label,
-            Some(data_loading_section_title),
-        )
-        .set_title(data_loading_section_title);
+        .add_named(&dashboard_container, Some(dashboard_section_title))
+        .set_title(dashboard_section_title);
 
-    sections[1..].iter().for_each(|sec| {
+    stack
+        .add_named(&history_container, Some(history_section_title))
+        .set_title(history_section_title);
+
+    sections[2..].iter().for_each(|sec| {
         stack
             .add_named(&Label::new(Some(sec)), Some(sec))
             .set_title(sec);
