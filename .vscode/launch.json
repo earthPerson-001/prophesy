@@ -25,7 +25,9 @@
                 // Turning on all the debug outputs in glib
                 "G_MESSAGES_DEBUG": "all",
                 // Turning on the backtracing in rust
-                "RUST_BACKTRACE": "1"
+                "RUST_BACKTRACE": "1",
+                // interactive debugging (enable for interactive debugging)
+                // "GTK_DEBUG": "interactive",
             }
         },
         {
