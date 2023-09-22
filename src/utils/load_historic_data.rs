@@ -1,32 +1,30 @@
-
 use glob::glob;
 use gtk::gio::prelude::*;
 use gtk::gio::File;
 use gtk::glib::DateTime;
 use gtk::glib::LogLevel;
+use std::collections::HashMap;
 use std::path::Path;
 
 #[derive(Debug)]
-enum ChargeState {
+pub enum ChargeState {
     Charging,
     Discharging,
     Unknown,
 }
 
 #[derive(Debug)]
-struct DataValue {
-    date_time: DateTime,
-    value: f32,
-    charge_state: ChargeState,
+pub struct DataValue {
+    pub date_time: DateTime,
+    pub value: f32,
+    pub charge_state: ChargeState,
 }
 
 #[cfg(target_os = "linux")]
-pub fn load_data() {
-    // considering all the paths are valid UTF-8 strings
-
-    use std::collections::HashMap;
-
+pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
     use gtk::{gio::Cancellable, glib::log_structured};
+
+    // considering all the paths are valid UTF-8 strings
 
     let data_dir = File::for_path(Path::new(r"/var/lib/upower/"));
     let pattern_for_data_files =
@@ -34,6 +32,8 @@ pub fn load_data() {
     let data_files = glob(&pattern_for_data_files).expect("Failed to read glob pattern");
 
     let mut files: Vec<File> = Vec::new();
+
+    let mut files_and_data: HashMap<File, HashMap<DateTime, DataValue>> = HashMap::new();
 
     // keeping track of different files
     for file in data_files {
@@ -56,8 +56,8 @@ pub fn load_data() {
     let cancellable = Cancellable::new();
 
     // reading the data of the files
-    files.iter().for_each(|file| {
-        println!(
+    files.into_iter().for_each(move |file| {
+        dbg!(
             "\nReading from file {}",
             file.path().unwrap().to_str().unwrap()
         );
@@ -78,7 +78,7 @@ pub fn load_data() {
             // continue if there are less than three columns
             if vals.len() < 3 {
                 continue;
-            }  
+            }
 
             // first column is time
             let date_time = DateTime::from_unix_utc(vals[0].parse::<i64>().unwrap());
@@ -90,9 +90,8 @@ pub fn load_data() {
                     _ => ChargeState::Unknown,
                 }
             };
-            
+
             if let Ok(dt) = date_time {
-                println!("time: {}-{}-{} {}hr {}m {}s, value: {}, state: {:?}", dt.year(), dt.month(), dt.day_of_month(), dt.hour(), dt.minute(), dt.seconds(), val, charge_state);
                 dat_as_struct.insert(
                     dt.clone(),
                     DataValue {
@@ -103,11 +102,23 @@ pub fn load_data() {
                 );
             }
         }
+
+        files_and_data.insert(file, dat_as_struct);
     });
+
+    return files_and_data;
 }
 
 #[cfg(target_os = "windows")]
-pub fn load_data() {}
+pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
+    let mut files_and_data: HashMap<File, HashMap<DateTime, DataValue>> = HashMap::new();
+
+    return files_and_data;
+}
 
 #[cfg(target_os = "macos")]
-pub fn load_data() {}
+pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
+    let mut files_and_data: HashMap<File, HashMap<DateTime, DataValue>> = HashMap::new();
+
+    return files_and_data;
+}
