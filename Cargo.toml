@@ -12,5 +12,8 @@ gtk = { version = "0.7.2", package = "gtk4", features = ["v4_12"] }
 starship-battery = "0.8.2"  # since this is used by terminal, it might get updated more often
                             # and have more bugfixes (maybe)
 
+[target.'cfg(target_os = "windows")'.dependencies]
+roxmltree = "0.18.1"  # xml parsing is required to parse the output of powercfg in windows
+
 [build-dependencies]
 glib-build-tools = "0.18.0"

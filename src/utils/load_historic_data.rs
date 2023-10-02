@@ -1,10 +1,12 @@
 use glob::glob;
 use gtk::gio::prelude::*;
 use gtk::gio::File;
+use gtk::glib::log_structured;
 use gtk::glib::DateTime;
 use gtk::glib::LogLevel;
 use std::collections::HashMap;
 use std::path::Path;
+use std::process::{Child, Command};
 
 #[derive(Debug)]
 pub enum ChargeState {
@@ -110,10 +112,100 @@ pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
 }
 
 #[cfg(target_os = "windows")]
+fn create_battery_report(file_path: &Path) -> Child {
+    Command::new("powercfg")
+        .args([
+            "/batteryreport",
+            "/output",
+            file_path.to_str().unwrap(),
+            "/xml",
+        ])
+        .spawn()
+        .expect("failed to execute child")
+}
+
+#[cfg(target_os = "windows")]
 pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
     let mut files_and_data: HashMap<File, HashMap<DateTime, DataValue>> = HashMap::new();
 
-    return files_and_data;
+    use std::{fs, io::Read};
+
+    let battery_report_filepath = Path::new("./batteryreport.xml");
+    let mut battery_report_subprocess = create_battery_report(battery_report_filepath);
+    battery_report_subprocess
+        .wait()
+        .expect("Couldn't complete the creation of batteryreport.");
+
+    let battery_report_file = fs::File::open(battery_report_filepath);
+
+    if let Ok(mut file) = battery_report_file {
+        let mut battery_report_string = String::new();
+        file.read_to_string(&mut battery_report_string)
+            .expect("Couldn't read batteryreport file.");
+
+        let opt = roxmltree::ParsingOptions {
+            allow_dtd: true,
+            ..roxmltree::ParsingOptions::default()
+        };
+        match roxmltree::Document::parse_with_options(&battery_report_string, opt) {
+            Ok(doc) => {
+                let mut descendants_of_root = doc.descendants();
+                let system_information =
+                    descendants_of_root.find(|n| n.has_tag_name("SystemInformation"));
+
+                log_structured!("Prophesy",
+                LogLevel::Debug,
+                {
+                    "MESSAGE" => std::format!("--------Sytem Information__________")
+                });
+
+                if let Some(info) = system_information {
+                    let childrens = info.children().filter(|c| c.tag_name().name() != "");
+
+                    for child in childrens {
+                        if let Some(text) = child.text() {
+                            log_structured!("Prophesy",
+                            LogLevel::Debug,
+                            {
+                                "MESSAGE" => std::format!("{} : {}", child.tag_name().name(), text)
+                            });
+                        }
+                    }
+                }
+
+                log_structured!("Prophesy",
+                LogLevel::Debug,
+                {
+                    "MESSAGE" => std::format!("--------Battery Information__________")
+                });
+
+                let batteries_node = descendants_of_root.find(|n| n.has_tag_name("Batteries"));
+
+                if let Some(node) = batteries_node {
+                    let batteries = node.children();
+
+                    for battery in batteries {
+                        for value in battery.children().filter(|c| c.tag_name().name() != "") {
+                            if let Some(text) = value.text() {
+                                log_structured!("Prophesy",
+                                LogLevel::Debug,
+                                {
+                                    "MESSAGE" => std::format!("{} : {}", value.tag_name().name(), text)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            Err(e) => log_structured!("Prophesy",
+            LogLevel::Debug,
+            {
+                "MESSAGE" => std::format!("Couldn't parse {} because of error {:?}", battery_report_filepath.to_str().unwrap() ,e)
+            }),
+        }
+    }
+
+    files_and_data
 }
 
 #[cfg(target_os = "macos")]
@@ -121,4 +213,50 @@ pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
     let mut files_and_data: HashMap<File, HashMap<DateTime, DataValue>> = HashMap::new();
 
     return files_and_data;
+}
+
+#[cfg(test)]
+#[cfg(target_os = "windows")]
+mod windows_tests {
+    use std::{fs::File, io::Read, path::Path};
+
+    use super::create_battery_report;
+
+    static BATTTERY_REPORT_XML: &str = include_str!("batteryreport.xml");
+
+    #[test]
+    fn load_xml_test() {
+        fn test_str(text: &str) {
+            let opt = roxmltree::ParsingOptions {
+                allow_dtd: true,
+                ..roxmltree::ParsingOptions::default()
+            };
+            match roxmltree::Document::parse_with_options(text, opt) {
+                Ok(_) => (),
+                Err(e) => panic!("Couldn't load the provided xml. Error {e}"),
+            }
+        }
+
+        let text = BATTTERY_REPORT_XML;
+        test_str(text);
+
+        let battery_report_filepath = Path::new("./batteryreport.xml");
+        let mut battery_report_subprocess = create_battery_report(battery_report_filepath);
+        battery_report_subprocess
+            .wait()
+            .expect("Couldn't complete the creation of batteryreport.");
+
+        let battery_report_file = File::open(battery_report_filepath);
+
+        if let Ok(mut file) = battery_report_file {
+            let mut battery_report_string = String::new();
+            file.read_to_string(&mut battery_report_string)
+                .expect("Couldn't read batteryreport file.");
+
+            test_str(&battery_report_string);
+        }
+    }
+
+    #[test]
+    fn parse_xml_test() {}
 }
