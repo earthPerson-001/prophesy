@@ -130,6 +130,8 @@ pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
 
     use std::{fs, io::Read};
 
+    use gtk::glib::TimeZone;
+
     let battery_report_filepath = Path::new("./batteryreport.xml");
     let mut battery_report_subprocess = create_battery_report(battery_report_filepath);
     battery_report_subprocess
@@ -196,6 +198,62 @@ pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
                         }
                     }
                 }
+
+                let mut dat_as_struct = HashMap::<DateTime, DataValue>::new();
+
+                let recent_usages_node =
+                    descendants_of_root.find(|n| n.has_tag_name("RecentUsage"));
+
+                if let Some(node) = recent_usages_node {
+                    let usage_entries = node
+                        .children()
+                        .filter(|c| c.text() != Some("") && c.text() != Some("\n    "));
+
+                    for usage in usage_entries {
+
+                        let time_stamp_option = usage.attribute("Timestamp");
+
+                        if time_stamp_option.is_none() {continue;}
+
+                        let on_ac_option = usage.attribute("Ac");
+                        let charge_capacity_option = usage.attribute("ChargeCapacity");
+
+                        let xml_deserializer = move || -> Option<DataValue> {
+                            // powercfg stores time in iso8601 format
+                            // using utc offset
+                            let local_time_stamp = DateTime::from_iso8601(
+                                time_stamp_option.unwrap(),
+                                Some(&TimeZone::new(Some("Z"))),
+                            )
+                            .unwrap();
+                            let on_ac = on_ac_option?;
+                            let charge_capacity = charge_capacity_option?.parse::<f32>().unwrap();
+
+                            let charge_state = {
+                                if on_ac == "1" {
+                                    ChargeState::Charging
+                                } else {
+                                    ChargeState::Discharging
+                                }
+                            };
+
+                            Some(DataValue {
+                                date_time: local_time_stamp,
+                                value: charge_capacity,
+                                charge_state,
+                            })
+                        };
+
+                        if let Some(dv) = xml_deserializer() {
+                            dat_as_struct.insert(dv.date_time.clone(), dv);
+                        }
+                    }
+                }
+
+                files_and_data.insert(
+                    gtk::gio::File::for_path(battery_report_filepath),
+                    dat_as_struct,
+                );
             }
             Err(e) => log_structured!("Prophesy",
             LogLevel::Debug,
