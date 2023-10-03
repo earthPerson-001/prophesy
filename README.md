@@ -14,7 +14,7 @@ Eg: If schemas are present under  ~/.local/share/glib-2.0/schemas/
 
     `export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.local/share/`
 
-### For Windows machines (Untested):
+### For Windows machines:
 - Copy the schema and compile schemas
 ```
 mkdir C:/ProgramData/glib-2.0/schemas/
