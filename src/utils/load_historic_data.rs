@@ -112,13 +112,21 @@ pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
 }
 
 #[cfg(target_os = "windows")]
-fn create_battery_report(file_path: &Path) -> Child {
+/**
+  # parameters
+  file_path: the path where the generated xml will be stored
+
+  number_of_days : max 14 days 
+ */
+fn create_battery_report(file_path: &Path, number_of_days: u8) -> Child {
     Command::new("powercfg")
         .args([
             "/batteryreport",
             "/output",
             file_path.to_str().unwrap(),
             "/xml",
+            "/duration",
+            number_of_days.to_string().as_str()
         ])
         .spawn()
         .expect("failed to execute child")
@@ -133,7 +141,7 @@ pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
     use gtk::glib::TimeZone;
 
     let battery_report_filepath = Path::new("./batteryreport.xml");
-    let mut battery_report_subprocess = create_battery_report(battery_report_filepath);
+    let mut battery_report_subprocess = create_battery_report(battery_report_filepath, 14);
     battery_report_subprocess
         .wait()
         .expect("Couldn't complete the creation of batteryreport.");
@@ -299,7 +307,7 @@ mod windows_tests {
         test_str(text);
 
         let battery_report_filepath = Path::new("./batteryreport.xml");
-        let mut battery_report_subprocess = create_battery_report(battery_report_filepath);
+        let mut battery_report_subprocess = create_battery_report(battery_report_filepath, 3);
         battery_report_subprocess
             .wait()
             .expect("Couldn't complete the creation of batteryreport.");
