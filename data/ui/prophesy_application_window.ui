@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE interface>
+<interface domain="Prophesy">
+  <requires lib="gtk" version="4.0" />
+  <template class="ProphesyApplicationWindow" parent="GtkApplicationWindow">
+    <property name="title" translatable="yes">ApplicationWindowTitle</property>
+    <property name="default-width">600</property>
+    <property name="default-height">400</property>
+    <property name="hide-on-close">TRUE</property>
+    <property name="titlebar">
+      <object class="GtkHeaderBar" id="header_bar">
+        <property name="title-widget">
+          <object class="GtkLabel" id="title">
+            <property name="label" translatable="yes">Prophesy</property>
+            <property name="single-line-mode">TRUE</property>
+            <property name="ellipsize">end</property>
+            <property name="width-chars">5</property>
+            <style>
+              <class name="title" />
+            </style>
+          </object>
+        </property>
+        <style>
+          <class name="title-bar"/>
+        </style>
+      </object>
+    </property>
+    <child>
+      <object class="ProphesyApplicationPane" id="prophesy_application_pane" />
+    </child>
+    <style>
+      <class name="application-window" />
+    </style>
+  </template>
+</interface>

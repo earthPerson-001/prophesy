@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/com/prophesy/">
-    <file compressed="true" preprocess="xml-stripblanks">main_window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">../ui/prophesy_application_window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">../ui/prophesy_application_pane.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">../ui/prophesy_left_pane.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">../ui/prophesy_right_pane.ui</file>
+    <file>../styles/assets/icons/about_icon.svg</file>
+    <file>../styles/assets/icons/battery_icon.svg</file>
+    <file>../styles/assets/icons/dashboard_icon.svg</file>
+    <file>../styles/assets/icons/history_icon.svg</file>
+    <file>../styles/assets/icons/suggestion_icon.svg</file>
   </gresource>
 </gresources>

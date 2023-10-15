@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE interface>
+<interface domain="Prophesy">
+    <requires lib="gtk" version="4.0" />
+    <template class="ProphesyApplicationPane" parent="GtkBox">
+        <child>
+            <object class="GtkPaned" id="content">
+                <property name="orientation">horizontal</property>
+                <property name="resize-end-child">TRUE</property>
+                <property name="resize-start-child">FALSE</property>
+                <property name="wide-handle">TRUE</property>
+                <property name="start-child">
+                    <object class="ProphesyLeftPane" id="left_child">
+                        <style>
+                            <class name="left-pane" />
+                        </style>
+                    </object>
+                </property>
+                <property name="end-child">
+                    <object class="ProphesyRightPane" id="right_child">
+                        <style>
+                            <class name="right-pane" />
+                        </style>
+                    </object>
+                </property>
+
+            </object>
+        </child>
+    </template>
+</interface>

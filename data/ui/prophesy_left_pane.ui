@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE interface>
+<interface domain="Prophesy">
+    <requires lib="gtk" version="4.0" />
+    <template class="ProphesyLeftPane" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+            <object class="GtkToggleButton" id="dashboard_toggle_button">
+                <property name="active">TRUE</property>
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <child>
+                            <object class="GtkImage">
+                                <property name="visible">True</property>
+                                <property name="icon-name">/com/prophesy/../styles/assets/icons/dashboard_icon.svg</property>
+                                <property name="icon-size">1</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel" id="dashboard_label">
+                                <property name="label">Dashboard</property>
+                                <style>
+                                    <class name="left-pane-label" />
+                                </style>
+                            </object>
+                        </child>
+                    </object>
+
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkToggleButton" id="history_toggle_button">
+                <child>
+                    <object class="GtkLabel" id="history_label">
+                        <property name="label">History</property>
+                        <style>
+                            <class name="left-pane-label" />
+                        </style>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkToggleButton" id="suggestion_toggle_button">
+                <child>
+                    <object class="GtkLabel" id="suggestion_label">
+                        <property name="label">Suggestions</property>
+                        <style>
+                            <class name="left-pane-label" />
+                        </style>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkToggleButton" id="about_toggle_button">
+                <child>
+                    <object class="GtkLabel" id="about_label">
+                        <property name="label">About</property>
+                        <style>
+                            <class name="left-pane-label" />
+                        </style>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="battery_summary">
+                <property name="hexpand">TRUE</property>
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Battery Summary Goes Here</property>
+                        <style>
+                            <class name="left-pane-label" />
+                        </style>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE interface>
+<interface domain="Prophesy">
+    <requires lib="gtk" version="4.0" />
+    <template class="ProphesyRightPane" parent="GtkBox">
+        <property name="hexpand">TRUE</property>
+        <property name="orientation">vertical</property>
+    </template>
+</interface>

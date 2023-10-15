@@ -609,6 +609,7 @@ dependencies = [
  "gtk4",
  "roxmltree",
  "starship-battery",
+ "uom",
 ]
 
 [[package]]
