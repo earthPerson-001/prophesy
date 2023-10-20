@@ -61,21 +61,7 @@ mod imp {
 
             // Load latest window state
             let _ = self.obj();
-
-            let theme = IconTheme::default();
-            theme.add_resource_path("/com/prophesy/icons");
-            let about_icon = theme.lookup_icon(
-                "about-icon",
-                &["help-about"],
-                48,
-                1,
-                gtk::TextDirection::Ltr,
-                gtk::IconLookupFlags::empty(),
-            );
-            // setting the imported icons
-            self.about_icon.set_from_paintable(Some(&about_icon));
-            // self.about_icon.set_from_icon_name(Some("about-icon"));
-            // self.about_icon.set_from_resource(Some("/com/prophesy/icons/scalable/actions/about-icon.svg"));
+            self.about_icon.set_from_icon_name(Some("about-icon"));
         }
     }
 

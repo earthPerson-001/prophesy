@@ -6,12 +6,12 @@
     <file compressed="true" preprocess="xml-stripblanks">prophesy_left_pane.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">prophesy_right_pane.ui</file>
   </gresource>
-  <gresource prefix="/com/prophesy/icons">
-    <file>scalable/actions/about-icon.svg</file>
-    <file>scalable/actions/battery-icon.svg</file>
-    <file>scalable/actions/dashboard-icon.svg</file>
-    <file>scalable/actions/history-icon.svg</file>
-    <file>scalable/actions/suggestion-icon.svg</file>
+  <gresource prefix="/com/prophesy/icons/scalable/actions">
+    <file>about-icon.svg</file>
+    <file>battery-icon.svg</file>
+    <file>dashboard-icon.svg</file>
+    <file>history-icon.svg</file>
+    <file>suggestion-icon.svg</file>
   </gresource>
   <gresource prefix="/com/prophesy/styles">
     <file>application_window.css</file>

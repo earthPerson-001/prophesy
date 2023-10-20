@@ -58,7 +58,7 @@ pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
     let cancellable = Cancellable::new();
 
     // reading the data of the files
-    files.into_iter().for_each(move |file| {
+    for file in files {
         dbg!(
             "\nReading from file {}",
             file.path().unwrap().to_str().unwrap()
@@ -106,18 +106,18 @@ pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
         }
 
         files_and_data.insert(file, dat_as_struct);
-    });
+    }
 
     return files_and_data;
 }
 
 #[cfg(target_os = "windows")]
 /**
-  # parameters
-  file_path: the path where the generated xml will be stored
+ # parameters
+ file_path: the path where the generated xml will be stored
 
-  number_of_days : max 14 days 
- */
+ number_of_days : max 14 days
+*/
 fn create_battery_report(file_path: &Path, number_of_days: u8) -> Child {
     Command::new("powercfg")
         .args([

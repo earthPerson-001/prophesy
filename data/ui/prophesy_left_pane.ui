@@ -24,8 +24,7 @@
                                 <child>
                                     <object class="GtkImage" id="dashboard_icon">
                                         <property name="visible">True</property>
-                                        <property name="icon-name">
-                                            dashboard-icon.svg</property>
+                                        <property name="icon-name">dashboard-icon</property>
                                         <property name="icon-size">1</property>
                                     </object>
                                 </child>
@@ -58,7 +57,7 @@
                                 <child>
                                     <object class="GtkImage" id="history_icon">
                                         <property name="visible">True</property>
-                                        <property name="icon-name">history-icon.svg</property>
+                                        <property name="icon-name">history-icon</property>
                                         <property name="icon-size">1</property>
                                     </object>
                                 </child>
@@ -91,7 +90,7 @@
                                 <child>
                                     <object class="GtkImage" id="suggestion_icon">
                                         <property name="visible">True</property>
-                                        <property name="icon-name">suggestion-icon.svg</property>
+                                        <property name="icon-name">suggestion-icon</property>
                                         <property name="icon-size">1</property>
                                     </object>
                                 </child>
