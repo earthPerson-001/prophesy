@@ -9,7 +9,7 @@ mod imp {
 
     // Object holding the state
     #[derive(CompositeTemplate, Default)]
-    #[template(resource = "/com/prophesy/../ui/prophesy_right_pane.ui")]
+    #[template(resource = "/com/prophesy/ui/prophesy_right_pane.ui")]
     pub struct RightPane {
 
     }

@@ -1,0 +1,47 @@
+@import url("./globals.css");
+
+.application-window {
+    background-image: url(/com/prophesy/images/prophesy-background.png);
+    font-family: Helvetica, Verdana, sans-serif;
+    color: @text;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+
+.text-default {
+    color: @text;
+}
+
+.border-none {
+    border: none;
+}
+
+windowcontrols button image:not(:hover) {
+    background-color: transparent;
+    color: @text;
+}
+
+.left-pane {
+    border-radius: 14px;
+    border: 0px solid rgba(216, 216, 216, 0.00);
+    background: radial-gradient(430.05% 351.04% at 0.9% 2.98%, rgba(5, 59, 80, 0.14) 0%, rgba(255, 255, 255, 0.00) 100%);
+    /* filter: blur(21px);  */ /* Doesn't work for gtk as there is no z-axis to place other items above it*/
+}
+
+.left-pane>button.toggle {
+    background: transparent;
+    color: @text ;
+}
+
+.left-pane>button.toggle:active {
+    color: @accent ;
+}
+
+.left-pane-label {
+    padding: 10px 10px 10px 10px;
+    font-size: 25px;
+    font-weight: bold;
+}

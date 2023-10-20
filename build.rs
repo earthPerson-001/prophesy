@@ -1,7 +1,7 @@
 fn main() {
     glib_build_tools::compile_resources(
-        &["data/resources", "data/ui", "data/assets/icons"],
-        "data/resources/resources.gresource.xml",
+        &["data/resources", "data/ui", "data/icons", "data/styles", "data/images"],
+        "data/resources.gresource.xml",
         "prophesy.gresource",
     );
 }

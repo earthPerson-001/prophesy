@@ -16,12 +16,13 @@
             <property name="ellipsize">end</property>
             <property name="width-chars">5</property>
             <style>
-              <class name="title" />
+              <class name="background-transparent" />
+              <class name="text-bold" />
             </style>
           </object>
         </property>
         <style>
-          <class name="title-bar"/>
+          <class name="background-transparent"/>
         </style>
       </object>
     </property>

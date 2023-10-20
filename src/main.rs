@@ -38,9 +38,9 @@ fn main() -> glib::ExitCode {
     // The whole UI is built in this
     // and all other side-effects while application is running
     application.connect_startup(|_| load_css());
+    application.connect_startup(|_| load_icons());
 
     application.connect_activate(build_ui);
-    application.connect_startup(|_| load_icons());
 
     // Logging some values on activate
     application.connect_activate(|_| {
@@ -70,14 +70,14 @@ fn main() -> glib::ExitCode {
 }
 
 fn load_icons() {
-    IconTheme::default().add_resource_path("/com/prophesy/../styles/assets/icons");
+    IconTheme::default().add_resource_path("/com/prophesy/icons");
 }
 
 fn load_css() {
     // Load the CSS file and add it to the provider
     let provider = CssProvider::new();
-    let css_path = "./data/styles/prophesy_application_window.css";
-    provider.load_from_file(&gio::File::for_path(css_path));
+    let css_path = "/com/prophesy/styles/prophesy.css";
+    provider.load_from_resource(css_path);
 
     // Add the provider to the default screen
     gtk::style_context_add_provider_for_display(

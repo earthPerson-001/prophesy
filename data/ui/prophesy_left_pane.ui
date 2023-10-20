@@ -4,80 +4,186 @@
     <requires lib="gtk" version="4.0" />
     <template class="ProphesyLeftPane" parent="GtkBox">
         <property name="orientation">vertical</property>
+        <property name="valign">center</property>
+        <property name="spacing">20</property>
         <child>
-            <object class="GtkToggleButton" id="dashboard_toggle_button">
-                <property name="active">TRUE</property>
+            <object class="GtkBox" id="navigation_menu">
+                <property name="orientation">vertical</property>
+                <property name="halign">start</property>
+                <property name="margin-start">20</property>
                 <child>
-                    <object class="GtkBox">
-                        <property name="orientation">horizontal</property>
+                    <object class="GtkToggleButton" id="dashboard_toggle_button">
+                        <property name="halign">start</property>
+                        <property name="margin-start">10</property>
+                        <property name="has-frame">FALSE</property>
+                        <property name="active">TRUE</property>
+                        <signal name="clicked" handler="on_navigation_button_clicked" />
                         <child>
-                            <object class="GtkImage">
-                                <property name="visible">True</property>
-                                <property name="icon-name">/com/prophesy/../styles/assets/icons/dashboard_icon.svg</property>
-                                <property name="icon-size">1</property>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <child>
+                                    <object class="GtkImage" id="dashboard_icon">
+                                        <property name="visible">True</property>
+                                        <property name="icon-name">
+                                            dashboard-icon.svg</property>
+                                        <property name="icon-size">1</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel" id="dashboard_label">
+                                        <property name="label">Dashboard</property>
+                                        <style>
+                                            <class name="left-pane-label" />
+                                        </style>
+                                    </object>
+                                </child>
                             </object>
                         </child>
+                        <style>
+                            <class name="background-transparent" />
+                            <class name="text-default" />
+                        </style>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkToggleButton" id="history_toggle_button">
+                        <property name="halign">start</property>
+                        <property name="margin-start">10</property>
+                        <property name="has-frame">FALSE</property>
+                        <property name="group">dashboard_toggle_button</property>
+                        <signal name="clicked" handler="on_navigation_button_clicked" />
                         <child>
-                            <object class="GtkLabel" id="dashboard_label">
-                                <property name="label">Dashboard</property>
-                                <style>
-                                    <class name="left-pane-label" />
-                                </style>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <child>
+                                    <object class="GtkImage" id="history_icon">
+                                        <property name="visible">True</property>
+                                        <property name="icon-name">history-icon.svg</property>
+                                        <property name="icon-size">1</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel" id="history_label">
+                                        <property name="label">History</property>
+                                        <style>
+                                            <class name="left-pane-label" />
+                                        </style>
+                                    </object>
+                                </child>
                             </object>
                         </child>
-                    </object>
-
-                </child>
-            </object>
-        </child>
-        <child>
-            <object class="GtkToggleButton" id="history_toggle_button">
-                <child>
-                    <object class="GtkLabel" id="history_label">
-                        <property name="label">History</property>
                         <style>
-                            <class name="left-pane-label" />
+                            <class name="background-transparent" />
+                            <class name="text-default" />
                         </style>
                     </object>
                 </child>
-            </object>
-        </child>
-        <child>
-            <object class="GtkToggleButton" id="suggestion_toggle_button">
                 <child>
-                    <object class="GtkLabel" id="suggestion_label">
-                        <property name="label">Suggestions</property>
+                    <object class="GtkToggleButton" id="suggestion_toggle_button">
+                        <property name="halign">start</property>
+                        <property name="margin-start">10</property>
+                        <property name="has-frame">FALSE</property>
+                        <property name="group">dashboard_toggle_button</property>
+                        <signal name="clicked" handler="on_navigation_button_clicked" />
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <child>
+                                    <object class="GtkImage" id="suggestion_icon">
+                                        <property name="visible">True</property>
+                                        <property name="icon-name">suggestion-icon.svg</property>
+                                        <property name="icon-size">1</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel" id="suggestion_label">
+                                        <property name="label">Suggestion</property>
+                                        <style>
+                                            <class name="left-pane-label" />
+                                        </style>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
                         <style>
-                            <class name="left-pane-label" />
+                            <class name="background-transparent" />
+                            <class name="text-default" />
                         </style>
                     </object>
                 </child>
-            </object>
-        </child>
-        <child>
-            <object class="GtkToggleButton" id="about_toggle_button">
                 <child>
-                    <object class="GtkLabel" id="about_label">
-                        <property name="label">About</property>
+                    <object class="GtkToggleButton" id="about_toggle_button">
+                        <property name="halign">start</property>
+                        <property name="margin-start">10</property>
+                        <property name="has-frame">FALSE</property>
+                        <property name="group">dashboard_toggle_button</property>
+                        <signal name="clicked" handler="on_navigation_button_clicked" />
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <child>
+                                    <object class="GtkImage" id="about_icon" />
+                                </child>
+                                <child>
+                                    <object class="GtkLabel" id="about_label">
+                                        <property name="label">About</property>
+                                        <style>
+                                            <class name="left-pane-label" />
+                                        </style>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
                         <style>
-                            <class name="left-pane-label" />
+                            <class name="background-transparent" />
+                            <class name="text-default" />
                         </style>
                     </object>
                 </child>
+                <style>
+                    <class name="navigation-menu" />
+                </style>
             </object>
         </child>
         <child>
             <object class="GtkBox" id="battery_summary">
+                <property name="halign">start</property>
+                <property name="margin-start">20</property>
                 <property name="hexpand">TRUE</property>
+                <property name="orientation">vertical</property>
                 <child>
                     <object class="GtkLabel">
-                        <property name="label">Battery Summary Goes Here</property>
+                        <property name="label">Battery Summary</property>
+                        <property name="halign">start</property>
                         <style>
-                            <class name="left-pane-label" />
+                            <class name="text-default" />
                         </style>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkBox" id="placeholder_box">
+                        <property name="orientation">vertical</property>
+                        <property name="height-request">400</property>
+                        <property name="width-request">304</property>
+                        <style>
+                            <class name="background-glass" />
+                        </style>
+                        <child>
+                            <placeholder />
+                        </child>
                     </object>
                 </child>
             </object>
         </child>
+        <style>
+            <class name="left-pane" />
+        </style>
+        <object class="GtkSizeGroup">
+            <property name="mode">horizontal</property>
+            <widgets>
+                <widget name="navigation_menu" />
+                <widget name="battery_summary" />
+            </widgets>
+        </object>
     </template>
 </interface>

@@ -16,7 +16,7 @@ mod imp {
 
     // Object holding the state
     #[derive(CompositeTemplate, Default)]
-    #[template(resource = "/com/prophesy/../ui/prophesy_application_window.ui")]
+    #[template(resource = "/com/prophesy/ui/prophesy_application_window.ui")]
     pub struct ApplicationWindow {
         pub settings: OnceCell<Settings>,
         #[template_child]

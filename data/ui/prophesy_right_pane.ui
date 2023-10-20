@@ -5,5 +5,9 @@
     <template class="ProphesyRightPane" parent="GtkBox">
         <property name="hexpand">TRUE</property>
         <property name="orientation">vertical</property>
+        <property name="width-request">1000</property>
+        <style>
+            <class name="left-pane"/>
+        </style>
     </template>
 </interface>

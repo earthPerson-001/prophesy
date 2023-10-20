@@ -11,7 +11,7 @@ mod imp {
 
     // Object holding the state
     #[derive(CompositeTemplate, Default)]
-    #[template(resource = "/com/prophesy/../ui/prophesy_application_pane.ui")]
+    #[template(resource = "/com/prophesy/ui/prophesy_application_pane.ui")]
     pub struct ApplicationPane {
         #[template_child]
         pub left_child: TemplateChild<LeftPane>,
