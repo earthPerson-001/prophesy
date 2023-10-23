@@ -17,7 +17,7 @@
                         <property name="margin-start">10</property>
                         <property name="has-frame">FALSE</property>
                         <property name="active">TRUE</property>
-                        <signal name="clicked" handler="on_navigation_button_clicked" />
+                        <signal name="clicked" handler="on_navigation_button_clicked" swapped="true"/>
                         <child>
                             <object class="GtkBox">
                                 <property name="orientation">horizontal</property>
@@ -50,7 +50,7 @@
                         <property name="margin-start">10</property>
                         <property name="has-frame">FALSE</property>
                         <property name="group">dashboard_toggle_button</property>
-                        <signal name="clicked" handler="on_navigation_button_clicked" />
+                        <signal name="clicked" handler="on_navigation_button_clicked" swapped="true"/>
                         <child>
                             <object class="GtkBox">
                                 <property name="orientation">horizontal</property>
@@ -83,7 +83,7 @@
                         <property name="margin-start">10</property>
                         <property name="has-frame">FALSE</property>
                         <property name="group">dashboard_toggle_button</property>
-                        <signal name="clicked" handler="on_navigation_button_clicked" />
+                        <signal name="clicked" handler="on_navigation_button_clicked" swapped="true"/>
                         <child>
                             <object class="GtkBox">
                                 <property name="orientation">horizontal</property>
@@ -116,7 +116,7 @@
                         <property name="margin-start">10</property>
                         <property name="has-frame">FALSE</property>
                         <property name="group">dashboard_toggle_button</property>
-                        <signal name="clicked" handler="on_navigation_button_clicked" />
+                        <signal name="clicked" handler="on_navigation_button_clicked" swapped="true"/>
                         <child>
                             <object class="GtkBox">
                                 <property name="orientation">horizontal</property>

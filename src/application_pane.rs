@@ -1,11 +1,17 @@
 use gtk::glib::subclass::InitializingObject;
+use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{glib, CompositeTemplate};
 
 use glib::Object;
 
 mod imp {
-    use crate::{left_pane::LeftPane, right_pane::RightPane};
+    use gtk::glib::closure_local;
+
+    use crate::{
+        left_pane::{LeftPane, Tabs},
+        right_pane::RightPane,
+    };
 
     use super::*;
 
@@ -46,8 +52,22 @@ mod imp {
 
             // Load latest window state
             let obj = self.obj();
-        }
 
+            // binding buttons on left pane to the tabs on the right pane
+            self.left_child.bind_property(
+                "left-pane-currently-active-tab",
+                &obj.imp().right_child.get(),
+                "right-pane-currently-active-tab",
+            ).sync_create().build();
+
+            self.left_child.connect_closure(
+                "tab-switched",
+                false,
+                closure_local!(@watch obj => move |_left_pane: LeftPane, switched_to: Tabs| {
+                    obj.imp().right_child.get().imp().pages.set_current_page(Some(switched_to as u32));
+                }),
+            );
+        }
     }
 }
 

@@ -18,6 +18,8 @@
     <file>colors.css</file>
     <file>globals.css</file>
     <file>prophesy.css</file>
+    <file>left-pane.css</file>
+    <file>right-pane.css</file>
   </gresource>
   <gresource prefix="/com/prophesy/images">
     <file>prophesy-background.png</file>

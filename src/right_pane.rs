@@ -1,17 +1,32 @@
 use gtk::glib::subclass::InitializingObject;
+use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{glib, CompositeTemplate};
 
 use glib::Object;
 
 mod imp {
+    use glib::Properties;
+    use std::cell::Cell;
+
+    use crate::left_pane::Tabs;
+
     use super::*;
 
     // Object holding the state
-    #[derive(CompositeTemplate, Default)]
+    #[derive(CompositeTemplate, Default, Properties)]
     #[template(resource = "/com/prophesy/ui/prophesy_right_pane.ui")]
+    #[properties(wrapper_type = super::RightPane)]
     pub struct RightPane {
-
+        #[template_child]
+        pub pages: TemplateChild<gtk::Notebook>,
+        #[property(
+            name = "right-pane-currently-active-tab",
+            set,
+            get,
+            builder(Tabs::default())
+        )]
+        pub currently_active_tab: Cell<Tabs>,
     }
 
     #[glib::object_subclass]
@@ -31,9 +46,10 @@ mod imp {
 
     impl WidgetImpl for RightPane {}
 
-    impl BoxImpl for RightPane{}
+    impl BoxImpl for RightPane {}
 
     // Trait shared by all GObjects
+    #[glib::derived_properties]
     impl ObjectImpl for RightPane {
         fn constructed(&self) {
             // Call "constructed" on parent
@@ -41,9 +57,7 @@ mod imp {
 
             // Load latest window state
             let obj = self.obj();
-
         }
-
     }
 }
 
