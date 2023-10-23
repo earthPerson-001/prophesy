@@ -100,7 +100,6 @@ mod imp {
                         let maybe_label_widget = label.downcast::<gtk::Label>();
 
                         if let Ok(label_widget) = maybe_label_widget {
-                            dbg!("Current button label: {}", label_widget.label());
                             let currently_active_tab_name: glib::GString = self.currently_active_tab.get().into();
                             if currently_active_tab_name != label_widget.label() {
                                 self.currently_active_tab
