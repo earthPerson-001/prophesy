@@ -22,7 +22,7 @@
           </object>
         </property>
         <style>
-          <class name="background-transparent"/>
+          <class name="background-transparent" />
         </style>
       </object>
     </property>
