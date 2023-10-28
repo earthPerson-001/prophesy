@@ -121,7 +121,11 @@
                             <object class="GtkBox">
                                 <property name="orientation">horizontal</property>
                                 <child>
-                                    <object class="GtkImage" id="about_icon" />
+                                    <object class="GtkImage" id="about_icon">
+                                        <property name="visible">True</property>
+                                        <property name="icon-name">about-icon</property>
+                                        <property name="icon-size">1</property>
+                                    </object>
                                 </child>
                                 <child>
                                     <object class="GtkLabel" id="about_label">

@@ -14,9 +14,15 @@ use application_window::ApplicationWindow;
 
 mod data;
 mod utils;
+
 mod application_pane;
 mod left_pane;
 mod right_pane;
+
+mod dashboard;
+mod history;
+mod suggestion;
+mod about;
 
 // The application name
 const APPLICATION_NAME: &str = "Prophesy";

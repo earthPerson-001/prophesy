@@ -2,7 +2,7 @@ use glib::subclass::Signal;
 use glib::Properties;
 use gtk::glib::subclass::InitializingObject;
 use gtk::subclass::prelude::*;
-use gtk::{glib, prelude::*, CompositeTemplate};
+use gtk::{glib, prelude::*, CompositeTemplate, IconTheme};
 use once_cell::sync::Lazy;
 
 use glib::Object;

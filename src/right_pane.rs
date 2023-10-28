@@ -9,7 +9,7 @@ mod imp {
     use glib::Properties;
     use std::cell::Cell;
 
-    use crate::left_pane::Tabs;
+    use crate::{left_pane::Tabs, dashboard::Dashboard, history::History, suggestion::Suggestion, about::About};
 
     use super::*;
 
@@ -37,6 +37,11 @@ mod imp {
 
         fn class_init(klass: &mut Self::Class) {
             klass.bind_template();
+            // Register the types which aren't used as template childs
+            Dashboard::ensure_type();
+            History::ensure_type();
+            Suggestion::ensure_type();
+            About::ensure_type();
         }
 
         fn instance_init(obj: &InitializingObject<Self>) {

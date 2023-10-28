@@ -5,26 +5,14 @@
     <template class="ProphesyRightPane" parent="GtkBox">
         <property name="hexpand">TRUE</property>
         <property name="vexpand">TRUE</property>
+        <property name="width-request">1000</property>
         <child>
             <object class="GtkNotebook" id="pages">
                 <property name="show-tabs">FALSE</property>
                 <property name="hexpand">TRUE</property>
                 <property name="vexpand">TRUE</property>
                 <child>
-                    <object class="GtkBox">
-                        <property name="width-request">1000</property>
-                        <child>
-                            <object class="GtkLabel" id="notebook-content-1">
-                                <property name="label">Dashboard Content</property>
-                                <style>
-                                    <class name="background-transparent" />
-                                </style>
-                            </object>
-                        </child>
-                        <style>
-                            <class name="background-transparent" />
-                        </style>
-                    </object>
+                    <object class="ProphesyDashboard"/>
                 </child>
                 <child type="tab">
                     <object class="GtkLabel" id="notebook-tab-1">
@@ -32,20 +20,7 @@
                     </object>
                 </child>
                 <child>
-                    <object class="GtkBox">
-                        <property name="width-request">1000</property>
-                        <child>
-                            <object class="GtkLabel" id="notebook-content-2">
-                                <property name="label">History Content</property>
-                                <style>
-                                    <class name="background-transparent" />
-                                </style>
-                            </object>
-                        </child>
-                        <style>
-                            <class name="background-transparent" />
-                        </style>
-                    </object>
+                    <object class="ProphesyHistory"/>
                 </child>
                 <child type="tab">
                     <object class="GtkLabel" id="notebook-tab-2">
@@ -53,20 +28,7 @@
                     </object>
                 </child>
                 <child>
-                    <object class="GtkBox">
-                        <property name="width-request">1000</property>
-                        <child>
-                            <object class="GtkLabel" id="notebook-content-3">
-                                <property name="label">Suggestion Content</property>
-                                <style>
-                                    <class name="background-transparent" />
-                                </style>
-                            </object>
-                        </child>
-                        <style>
-                            <class name="background-transparent" />
-                        </style>
-                    </object>
+                    <object class="ProphesySuggestion"/>
                 </child>
                 <child type="tab">
                     <object class="GtkLabel" id="notebook-tab-3">
@@ -74,20 +36,7 @@
                     </object>
                 </child>
                 <child>
-                    <object class="GtkBox">
-                        <property name="width-request">1000</property>
-                        <child>
-                            <object class="GtkLabel" id="notebook-content-4">
-                                <property name="label">About Content</property>
-                                <style>
-                                    <class name="background-transparent" />
-                                </style>
-                            </object>
-                        </child>
-                        <style>
-                            <class name="background-transparent" />
-                        </style>
-                    </object>
+                    <object class="ProphesyAbout"/>
                 </child>
                 <child type="tab">
                     <object class="GtkLabel" id="notebook-tab-4">

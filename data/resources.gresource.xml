@@ -5,6 +5,10 @@
     <file compressed="true" preprocess="xml-stripblanks">prophesy_application_pane.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">prophesy_left_pane.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">prophesy_right_pane.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_dashboard.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_history.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_suggestion.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_about.ui</file>
   </gresource>
   <gresource prefix="/com/prophesy/icons/scalable/actions">
     <file>about-icon.svg</file>
