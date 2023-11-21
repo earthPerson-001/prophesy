@@ -1,0 +1,10 @@
+@define-color primary #053b50;
+@define-color secondary #176b87;
+@define-color tertianary #64ccc5;
+@define-color complementary #dddddd;
+@define-color shade-grey #a9a9a9;
+
+@define-color text @shade-grey;
+@define-color background transparent;
+@define-color primary @primary;
+@define-color accent @tertianary;

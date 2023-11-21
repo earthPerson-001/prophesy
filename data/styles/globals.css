@@ -1,0 +1,9 @@
+@import url("./colors.css");
+
+.background-transparent {
+    background: transparent;
+}
+
+.background-glass {
+    background: rgba(221, 221, 221, 0.20); 
+}

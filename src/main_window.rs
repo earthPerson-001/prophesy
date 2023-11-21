@@ -1,4 +1,3 @@
-use crate::application_window::ApplicationWindow;
 use gtk::{prelude::*, Box};
 use gtk::{Button, Image, MenuButton, Stack, StackSidebar};
 use gtk::{HeaderBar, Label};
@@ -7,7 +6,15 @@ use crate::utils::load_historic_data::load_data;
 
 use starship_battery as battery;
 
-pub fn build_main_window(app_window: &ApplicationWindow) {
+pub fn build_main_window<T>(app_window: &T)
+where T:gtk::prelude::IsA<gtk::Window> {
+
+}
+
+pub fn build_main_window_unused<T>(app_window: &T) 
+where 
+    T: gtk::prelude::IsA<gtk::Window>
+{
     // the title bar
 
     let head_bar = HeaderBar::new();

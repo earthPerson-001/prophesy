@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE interface>
+<interface domain="Prophesy">
+    <requires lib="gtk" version="4.0" />
+    <template class="ProphesyAbout" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="baseline-position">center</property>
+        <child>
+            <object class="GtkLabel">
+                <property name="label">About Us!</property>
+            </object>
+        </child>
+    </template>
+</interface>

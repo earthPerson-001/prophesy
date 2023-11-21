@@ -1,0 +1,25 @@
+@import url("./globals.css");
+
+.application-window {
+    background-image: url(/com/prophesy/images/prophesy-background.png);
+    font-family: Helvetica, Verdana, sans-serif;
+    color: @text;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+
+.text-default {
+    color: @text;
+}
+
+.border-none {
+    border: none;
+}
+
+windowcontrols button image:not(:hover) {
+    background-color: transparent;
+    color: @text;
+}

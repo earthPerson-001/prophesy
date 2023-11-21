@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/prophesy/ui">
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_application_window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_application_pane.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_left_pane.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_right_pane.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_dashboard.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_history.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_suggestion.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">prophesy_about.ui</file>
+  </gresource>
+  <gresource prefix="/com/prophesy/icons/scalable/actions">
+    <file>about-icon.svg</file>
+    <file>battery-icon.svg</file>
+    <file>dashboard-icon.svg</file>
+    <file>history-icon.svg</file>
+    <file>suggestion-icon.svg</file>
+  </gresource>
+  <gresource prefix="/com/prophesy/styles">
+    <file>application_window.css</file>
+    <file>colors.css</file>
+    <file>globals.css</file>
+    <file>prophesy.css</file>
+    <file>left-pane.css</file>
+    <file>right-pane.css</file>
+  </gresource>
+  <gresource prefix="/com/prophesy/images">
+    <file>prophesy-background.png</file>
+  </gresource>
+</gresources>

@@ -22,6 +22,10 @@ cp data/schemas/com.prophesy.gschema.xml C:/ProgramData/glib-2.0/schemas/
 glib-compile-schemas C:/ProgramData/glib-2.0/schemas/
 ```
 
+Additionally, gtk4 libraries are also required.
+
+Note: For svg icons librsvg needs to be installed. (tested via gvsbuild)</b>
+
 # Development
 
 ## Dependencies
