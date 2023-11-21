@@ -2,7 +2,7 @@ use glib::subclass::Signal;
 use glib::Properties;
 use gtk::glib::subclass::InitializingObject;
 use gtk::subclass::prelude::*;
-use gtk::{glib, prelude::*, CompositeTemplate, IconTheme};
+use gtk::{glib, prelude::*, CompositeTemplate};
 use once_cell::sync::Lazy;
 
 use glib::Object;
@@ -83,7 +83,6 @@ mod imp {
 
             // Load latest window state
             let _ = self.obj();
-            self.about_icon.set_from_icon_name(Some("about-icon"));
         }
     }
 
