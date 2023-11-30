@@ -5,4 +5,6 @@
 
 
 // Exposing the submodules of utils
-pub mod load_historic_data;
+pub mod battery_historic_data;
+
+pub mod battery_realtime_data;

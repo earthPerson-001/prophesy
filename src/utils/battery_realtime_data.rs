@@ -1,4 +1,4 @@
-use battery::{
+use starship_battery::{
     units::{
         electric_potential::attovolt, energy::attojoule, power::attowatt, ratio::part_per_hundred,
         ElectricPotential, Energy, Power, Ratio, ThermodynamicTemperature, Time,
@@ -6,10 +6,12 @@ use battery::{
     State, Technology,
 };
 
+use starship_battery as battery;
+
 pub struct BatteryInfo {
     cycle_count: Option<u32>,
     state: State,
-    state_of_charge: Ratio,
+    pub state_of_charge: Ratio,
     state_of_health: Ratio,
     energy: Energy,
     energy_full_design: Energy,
