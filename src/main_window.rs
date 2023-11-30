@@ -1,19 +1,20 @@
 use gtk::{prelude::*, Box};
 use gtk::{Button, Image, MenuButton, Stack, StackSidebar};
 use gtk::{HeaderBar, Label};
-
+mod data;
 use crate::utils::load_historic_data::load_data;
 
-use starship_battery as battery;
+// use starship_battery as battery;
 
 pub fn build_main_window<T>(app_window: &T)
-where T:gtk::prelude::IsA<gtk::Window> {
-
+where
+    T: gtk::prelude::IsA<gtk::Window>,
+{
 }
 
-pub fn build_main_window_unused<T>(app_window: &T) 
-where 
-    T: gtk::prelude::IsA<gtk::Window>
+pub fn build_main_window_unused<T>(app_window: &T)
+where
+    T: gtk::prelude::IsA<gtk::Window>,
 {
     // the title bar
 
@@ -49,34 +50,36 @@ where
     let dashboard_container = Box::new(gtk::Orientation::Vertical, 10);
 
     // using starship-battery to extract battery information
-    let manager = battery::Manager::new();
+    // let manager = battery::Manager::new();
 
-    if let Ok(mgr) = manager {
-        for (idx, maybe_battery) in mgr.batteries().unwrap().enumerate() {
-            let battery = maybe_battery.unwrap();
-            dashboard_container.append(&Label::new(Some(format!("Battery #{}:", idx).as_str())));
-            dashboard_container.append(&Label::new(Some(
-                format!("Vendor: {:?}", battery.vendor()).as_str(),
-            )));
-            dashboard_container.append(&Label::new(Some(
-                format!("Model: {:?}", battery.model()).as_str(),
-            )));
-            dashboard_container.append(&Label::new(Some(
-                format!("State: {:?}", battery.state()).as_str(),
-            )));
-            if let Some(full_charge_time) = battery.time_to_full() {
-                dashboard_container.append(&Label::new(Some(
-                    format!("Time to full charge: {:?}", full_charge_time).as_str(),
-                )));
-            }
-            if let Some(time_to_emtpy) = battery.time_to_empty() {
-                dashboard_container.append(&Label::new(Some(
-                    format!("Time to emtpy: {:?}", time_to_emtpy).as_str(),
-                )));
-            }
-        }
-    }
+    // if let Ok(mgr) = manager {
+    //     for (idx, maybe_battery) in mgr.batteries().unwrap().enumerate() {
+    //         let battery = maybe_battery.unwrap();
+    //         dashboard_container.append(&Label::new(Some(format!("Battery #{}:", idx).as_str())));
+    //         dashboard_container.append(&Label::new(Some(
+    //             format!("Vendor: {:?}", battery.vendor()).as_str(),
+    //         )));
+    //         dashboard_container.append(&Label::new(Some(
+    //             format!("Model: {:?}", battery.model()).as_str(),
+    //         )));
+    //         dashboard_container.append(&Label::new(Some(
+    //             format!("State: {:?}", battery.state()).as_str(),
+    //         )));
+    //         if let Some(full_charge_time) = battery.time_to_full() {
+    //             dashboard_container.append(&Label::new(Some(
+    //                 format!("Time to full charge: {:?}", full_charge_time).as_str(),
+    //             )));
+    //         }
+    //         if let Some(time_to_emtpy) = battery.time_to_empty() {
+    //             dashboard_container.append(&Label::new(Some(
+    //                 format!("Time to emtpy: {:?}", time_to_emtpy).as_str(),
+    //             )));
+    //         }
+    //     }
+    // }
 
+    let mut battery_status = data::BatteryInfo::new();
+    //dashboard write
     // history section
     let history_section_title = sections[1];
     let history_container = Box::new(gtk::Orientation::Vertical, 10);
