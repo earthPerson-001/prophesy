@@ -117,6 +117,10 @@ pub fn load_data() -> HashMap<File, HashMap<DateTime, DataValue>> {
  file_path: the path where the generated xml will be stored
 
  number_of_days : max 14 days
+
+ # Bug
+ New batteryreport is create on each call irrespective of previous reports. 
+ So, this should be call infrequently(ideally only once).
 */
 fn create_battery_report(file_path: &Path, number_of_days: u8) -> Child {
     Command::new("powercfg")

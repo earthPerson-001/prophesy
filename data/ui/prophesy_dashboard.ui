@@ -6,8 +6,38 @@
         <property name="orientation">vertical</property>
         <property name="baseline-position">center</property>
         <child>
-            <object class="GtkLabel">
-                <property name="label">Dashboard</property>
+            <object class="GtkBox" id="page_title">
+                <property name="orientation">horizontal</property>
+                <property name="baseline-position">center</property>
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Dashboard</property>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="graph_box">
+                <property name="height-request">500</property>
+                <property name="width-request">500</property>
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Graph Goes Here</property>
+                        <style>
+                            <class name="graph-label" />
+                        </style>
+                    </object>
+                </child>
+                <style>
+                    <class name="dashboard-graph" />
+                </style>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="labels_box">
+                <style>
+                    <class name="dashboard_labels" />
+                </style>
             </object>
         </child>
     </template>

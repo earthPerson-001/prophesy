@@ -6,13 +6,9 @@ use gtk::gio;
 
 use gtk::{gdk::Display, CssProvider, IconTheme};
 
-mod main_window;
-use main_window::build_main_window;
-
 mod application_window;
 use application_window::ApplicationWindow;
 
-mod data;
 mod utils;
 
 mod application_pane;
@@ -33,7 +29,6 @@ fn main() -> glib::ExitCode {
 
     // Register and include resources
     // used to load resources (for ui files)
-    // TODO build ui through this ( it isn't used for now)
     gio::resources_register_include!("prophesy.gresource")
         .expect("Failed to register resources.");
 
@@ -98,8 +93,6 @@ fn build_ui(application: &gtk::Application) {
     let window = ApplicationWindow::new(application);
 
     window.set_title(Some(APPLICATION_NAME));
-
-    build_main_window(&window);
 
     window.present();
 }
