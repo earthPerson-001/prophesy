@@ -42,6 +42,7 @@ mod imp {
         type ParentType = gtk::Box;
 
         fn class_init(klass: &mut Self::Class) {
+            crate::graph::Graph::ensure_type();
             klass.bind_template();
         }
 
@@ -140,7 +141,7 @@ mod imp {
             let mut file_basename = f
                 .basename()
                 .expect("Couldn't get file basename for battery report file.");
-            file_basename.set_extension(".csv");
+            file_basename.set_extension("csv");
 
             let file_name = file_basename
                 .file_name()
@@ -150,6 +151,9 @@ mod imp {
 
             let mut battery_history_file = fs::File::create(battery_history_file_path)
                 .expect("Couldn't create battery_history_file");
+
+            // the csv header
+            battery_history_file.write_fmt(format_args!("date_time,capacity,state\n")).unwrap();
 
             for (dt, dv) in d.iter() {
                 battery_history_file
