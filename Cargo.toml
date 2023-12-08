@@ -14,6 +14,14 @@ starship-battery = "0.8.2"  # since this is used by terminal, it might get updat
                             # and have more bugfixes (maybe)
 uom = "0.35.0"
 
+[dependencies.battery-data-analysis]
+git = "https://github.com/earthPerson-001/battery-data-analysis"
+
+# local patch
+[patch."https://github.com/earthPerson-001/battery-data-analysis"]
+battery-data-analysis = { path = "../battery-data-analysis"}
+
+
 [target.'cfg(target_os = "windows")'.dependencies]
 roxmltree = "0.19.0"  # xml parsing is required to parse the output of powercfg in windows
 
