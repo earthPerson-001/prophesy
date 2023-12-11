@@ -42,9 +42,19 @@ mod imp {
             let backend = CairoBackend::new(&cr, (width, height)).unwrap();
 
             if self.end_day.get() >= self.start_day.get() {
-                let error_msg = "The range for from(days before) and to(days before) doesn't match. \n Error: 'to' must be less than 'from'";
-                display_error( backend, error_msg, 
-                ((width/2) as i32 - error_msg.lines().reduce(|max_val, val| max_val.len().max(val.len())) , (height/2) as i32));
+                let error_msg = String::from("The range for from(days before) and to(days before) doesn't match. \n Error: 'to' must be less than 'from'");
+                let mut max_line_len = 0;
+                error_msg
+                    .lines()
+                    .for_each(|line| max_line_len = max_line_len.max(line.len()));
+                display_error(
+                    backend,
+                    error_msg.as_str(),
+                    (
+                        (width - max_line_len as u32) as i32 / 2,
+                        (height / 2) as i32,
+                    ),
+                );
             } else {
                 let maybe_data = get_data_from_csv("E:\\prophesy\\batteryreport.csv");
                 battery_plot_pdf(
