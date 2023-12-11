@@ -18,18 +18,19 @@
         </child>
         <child>
             <object class="GtkBox" id="graph_box">
-                <property name="height-request">300</property>
-                <property name="width-request">1500</property>
                 <child>
-                   <object class="ProphesyGraph" id="dashboard_graph">
-                        <property name="height-request">300</property>
-                        <property name="width-request">1500</property>
+                    <object class="ProphesyGraph" id="dashboard_graph">
+                        <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                   </object>
+                        <!-- Only showing a day by default -->
+                        <property name="start_day">1</property>
+                        <property name="end_day">0</property>
+                        <property name="show_data_points">false</property>
+                        <style>
+                            <class name="background-glass" />
+                        </style>
+                    </object>
                 </child>
-                <style>
-                    <class name="dashboard-graph" />
-                </style>
             </object>
         </child>
         <child>

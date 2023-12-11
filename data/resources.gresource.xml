@@ -25,6 +25,7 @@
     <file>left-pane.css</file>
     <file>right-pane.css</file>
     <file>dashboard.css</file>
+    <file>history.css</file>
   </gresource>
   <gresource prefix="/com/prophesy/images">
     <file>prophesy-background.png</file>

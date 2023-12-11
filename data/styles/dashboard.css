@@ -1,10 +1,5 @@
 @import url("./globals.css");
 
-/* debug */
-.dashboard-graph {
-    background: rgba(202, 137, 137, 0.5);
-}
-
 .graph-label {
     color: @accent;
 }

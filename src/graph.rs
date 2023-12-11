@@ -2,15 +2,25 @@ use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 
-use battery_data_analysis::{battery_plot_pdf, get_data_from_csv, CairoBackend};
+use battery_data_analysis::{battery_plot_pdf, display_error, get_data_from_csv, CairoBackend};
 use glib::Object;
 
 mod imp {
+    use std::cell::Cell;
+
     use super::*;
 
     // Object holding the state
-    #[derive(Debug, Default)]
-    pub struct Graph {}
+    #[derive(Debug, Default, glib::Properties)]
+    #[properties(wrapper_type = super::Graph)]
+    pub struct Graph {
+        #[property(get, set, minimum = 1, maximum = 14, default_value = 1)]
+        start_day: Cell<i64>,
+        #[property(get, set, minimum = 0, maximum = 13, default_value = 0)]
+        end_day: Cell<i64>,
+        #[property(get, set, default_value = false)]
+        show_data_points: Cell<bool>,
+    }
 
     #[glib::object_subclass]
     impl ObjectSubclass for Graph {
@@ -30,19 +40,38 @@ mod imp {
             let bounds = gtk::graphene::Rect::new(0.0, 0.0, width as f32, height as f32);
             let cr = snapshot.append_cairo(&bounds);
             let backend = CairoBackend::new(&cr, (width, height)).unwrap();
-            let maybe_data = get_data_from_csv("E:\\prophesy\\batteryreport.csv");
-            battery_plot_pdf(backend, maybe_data.unwrap()).unwrap();
+
+            if self.end_day.get() >= self.start_day.get() {
+                let error_msg = "The range for from(days before) and to(days before) doesn't match. \n Error: 'to' must be less than 'from'";
+                display_error( backend, error_msg, 
+                ((width/2) as i32 - error_msg.lines().reduce(|max_val, val| max_val.len().max(val.len())) , (height/2) as i32));
+            } else {
+                let maybe_data = get_data_from_csv("E:\\prophesy\\batteryreport.csv");
+                battery_plot_pdf(
+                    backend,
+                    maybe_data.unwrap(),
+                    Some(self.start_day.get()),
+                    Some(self.end_day.get()),
+                    self.show_data_points.get(),
+                )
+                .unwrap();
+            }
         }
     }
 
     // Trait shared by all GObjects
     impl ObjectImpl for Graph {
-        fn constructed(&self) {
-            // Call "constructed" on parent
-            self.parent_constructed();
+        fn properties() -> &'static [glib::ParamSpec] {
+            Self::derived_properties()
+        }
 
-            // Load latest window state
-            let _ = self.obj();
+        fn set_property(&self, id: usize, value: &glib::Value, pspec: &glib::ParamSpec) {
+            Self::derived_set_property(self, id, value, pspec);
+            self.obj().queue_draw();
+        }
+
+        fn property(&self, id: usize, pspec: &glib::ParamSpec) -> glib::Value {
+            Self::derived_property(self, id, pspec)
         }
     }
 }
