@@ -47,6 +47,20 @@
             </object>
         </child>
         <child>
+            <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <property name="baseline-position">center</property>
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Interpolate Data</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkSwitch" id="interpolate_data" />
+                </child>
+            </object>
+        </child>
+        <child>
             <object class="GtkBox" id="graph_box">
                 <property name="orientation">vertical</property>
                 <child>
@@ -107,6 +121,9 @@
                         <property name="end_day" bind-source="end_day" bind-property="value"
                             bind-flags="sync-create" />
                         <property name="show_data_points" bind-source="show_data_points"
+                            bind-property="active"
+                            bind-flags="sync-create" />
+                        <property name="interpolate_data" bind-source="interpolate_data"
                             bind-property="active"
                             bind-flags="sync-create" />
                     </object>

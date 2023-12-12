@@ -20,6 +20,8 @@ mod imp {
         end_day: Cell<i64>,
         #[property(get, set, default_value = false)]
         show_data_points: Cell<bool>,
+        #[property(get, set, default_value = false)]
+        interpolate_data: Cell<bool>,
     }
 
     #[glib::object_subclass]
@@ -63,6 +65,7 @@ mod imp {
                     Some(self.start_day.get()),
                     Some(self.end_day.get()),
                     self.show_data_points.get(),
+                    self.interpolate_data.get(),
                 )
                 .unwrap();
             }
