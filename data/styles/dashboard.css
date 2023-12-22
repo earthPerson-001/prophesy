@@ -6,5 +6,6 @@
 
 .dashboard_labels {
     color: @primary;
+    font-size: 150%;
 }
 
