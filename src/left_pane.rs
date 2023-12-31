@@ -33,8 +33,6 @@ mod imp {
         pub about_label: TemplateChild<gtk::Label>,
         #[template_child]
         pub about_icon: TemplateChild<gtk::Image>,
-        #[template_child]
-        pub battery_summary: TemplateChild<gtk::Box>,
 
         #[property(
             name = "left-pane-currently-active-tab",

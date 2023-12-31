@@ -7,19 +7,19 @@
         <property name="baseline-position">center</property>
         <child>
             <object class="GtkBox" id="page_title">
+                <property name="halign">end</property>
                 <property name="orientation">horizontal</property>
                 <property name="baseline-position">center</property>
-                <child>
-                    <object class="GtkLabel">
-                        <property name="label">Dashboard</property>
-                    </object>
-                </child>
             </object>
         </child>
         <child>
             <object class="GtkBox" id="graph_box">
                 <child>
                     <object class="ProphesyGraph" id="dashboard_graph">
+                        <property name="margin-start">20</property>
+                        <property name="margin-end">20</property>
+                        <property name="margin-top">20</property>
+                        <property name="margin-bottom">20</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
                         <!-- Only showing a day by default -->
@@ -27,21 +27,39 @@
                         <property name="end_day">0</property>
                         <property name="show_data_points">false</property>
                         <style>
-                            <class name="background-glass" />
+                            <!-- <class name="background-glass" /> -->
                         </style>
                     </object>
                 </child>
             </object>
         </child>
         <child>
+            <object class="GtkLabel">
+                <property name="halign">start</property>
+                <property name="margin-start">20</property>
+                <property name="label">Current Battery Status</property>
+                <style>
+                    <class name="graph-label"/>
+                </style>
+            </object>
+        </child>
+        <child>
+            <object class="GtkSeparator">
+                <property name="orientation">horizontal</property>
+            </object>
+        </child>
+        <child>
             <object class="GtkBox">
                 <property name="hexpand">true</property>
-                <property name="margin-start">10</property>
+                <property name="margin-start">20</property>
                 <property name="margin-end">10</property>
                 <property name="margin-top">10</property>
                 <property name="margin-bottom">10</property>
+                <property name="halign">start</property>
                 <child>
                     <object class="GtkGrid">
+                        <property name="column-spacing">50</property>
+                        <property name="row-spacing">10</property>
                         <property name="hexpand">true</property>
                         <child>
                             <object class="GtkLabel" id="current_percentage_label">
