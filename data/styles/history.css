@@ -1,9 +1,7 @@
 @import url("./globals.css");
 
-
-
-.page-title {
-    color: @accent;
+.history-labels-font {
+    color: @sharp-text;
+    font-weight: 500;
+    font-size: 150%;
 }
-
-

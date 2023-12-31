@@ -1,5 +1,3 @@
-use glob::glob;
-use gtk::gio::prelude::*;
 use gtk::gio::File;
 use gtk::glib::log_structured;
 use gtk::glib::DateTime;

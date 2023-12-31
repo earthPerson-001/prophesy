@@ -61,7 +61,7 @@ mod imp {
             self.parent_constructed();
 
             // Load latest window state
-            let obj = self.obj();
+            let _ = self.obj();
         }
     }
 }
