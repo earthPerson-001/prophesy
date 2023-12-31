@@ -4,12 +4,13 @@
     <requires lib="gtk" version="4.0" />
     <template class="ProphesyLeftPane" parent="GtkBox">
         <property name="orientation">vertical</property>
-        <property name="valign">center</property>
-        <property name="spacing">20</property>
+        <property name="valign">start</property>
+        <property name="spacing">60</property>
         <child>
             <object class="GtkBox" id="navigation_menu">
                 <property name="orientation">vertical</property>
                 <property name="halign">start</property>
+                <property name="margin-top">35</property>
                 <property name="margin-start">20</property>
                 <child>
                     <object class="GtkToggleButton" id="dashboard_toggle_button">
@@ -25,7 +26,7 @@
                                     <object class="GtkImage" id="dashboard_icon">
                                         <property name="visible">True</property>
                                         <property name="icon-name">dashboard-icon</property>
-                                        <property name="icon-size">1</property>
+                                        <property name="icon-size">2</property>
                                     </object>
                                 </child>
                                 <child>
@@ -58,7 +59,7 @@
                                     <object class="GtkImage" id="history_icon">
                                         <property name="visible">True</property>
                                         <property name="icon-name">history-icon</property>
-                                        <property name="icon-size">1</property>
+                                        <property name="icon-size">2</property>
                                     </object>
                                 </child>
                                 <child>
@@ -91,7 +92,7 @@
                                     <object class="GtkImage" id="suggestion_icon">
                                         <property name="visible">True</property>
                                         <property name="icon-name">suggestion-icon</property>
-                                        <property name="icon-size">1</property>
+                                        <property name="icon-size">2</property>
                                     </object>
                                 </child>
                                 <child>
@@ -124,7 +125,7 @@
                                     <object class="GtkImage" id="about_icon">
                                         <property name="visible">True</property>
                                         <property name="icon-name">about-icon</property>
-                                        <property name="icon-size">1</property>
+                                        <property name="icon-size">2</property>
                                     </object>
                                 </child>
                                 <child>
@@ -148,49 +149,8 @@
                 </style>
             </object>
         </child>
-        <child>
-            <object class="GtkBox" id="battery_summary">
-                <property name="halign">start</property>
-                <property name="margin-start">20</property>
-                <property name="hexpand">TRUE</property>
-                <property name="orientation">vertical</property>
-                <child>
-                    <object class="GtkLabel">
-                        <property name="label">Battery Summary</property>
-                        <property name="halign">start</property>
-                        <style>
-                            <class name="text-default" />
-                        </style>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="placeholder_box">
-                        <property name="orientation">vertical</property>
-                        <property name="height-request">400</property>
-                        <property name="width-request">304</property>
-                        <style>
-                            <class name="background-glass" />
-                        </style>
-                        <child>
-                            <object class="GtkImage" id="battery_icon">
-                                <property name="visible">True</property>
-                                <property name="icon-name">battery-icon</property>
-                                <property name="icon-size">1</property>
-                            </object>
-                        </child>
-                    </object>
-                </child>
-            </object>
-        </child>
         <style>
             <class name="left-pane" />
         </style>
-        <object class="GtkSizeGroup">
-            <property name="mode">horizontal</property>
-            <widgets>
-                <widget name="navigation_menu" />
-                <widget name="battery_summary" />
-            </widgets>
-        </object>
     </template>
 </interface>

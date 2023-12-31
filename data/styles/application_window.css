@@ -4,6 +4,7 @@
     background-image: url(/com/prophesy/images/prophesy-background.png);
     font-family: Helvetica, Verdana, sans-serif;
     color: @text;
+    background-size: cover;
 }
 
 .text-bold {
@@ -22,4 +23,9 @@
 windowcontrols button image:not(:hover) {
     background-color: transparent;
     color: @text;
+}
+
+.title-font {
+    font-size: 200%;
+    font-weight: bold;
 }

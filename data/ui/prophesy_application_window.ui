@@ -18,6 +18,7 @@
             <style>
               <class name="background-transparent" />
               <class name="text-bold" />
+              <class name="title-font"/>
             </style>
           </object>
         </property>

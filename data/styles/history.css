@@ -1,11 +1,6 @@
 @import url("./globals.css");
 
-.graph-label {
-    color: @primary;
-    font-size: 200%;
-}
-
-.dashboard_labels {
+.history-labels-font {
     color: @sharp-text;
     font-weight: 500;
     font-size: 150%;

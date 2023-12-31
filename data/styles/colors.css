@@ -5,6 +5,7 @@
 @define-color shade-grey #a9a9a9;
 
 @define-color text @shade-grey;
+@define-color sharp-text white;
 @define-color background transparent;
 @define-color primary @primary;
 @define-color accent @tertianary;

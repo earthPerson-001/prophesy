@@ -10,21 +10,21 @@ use starship_battery as battery;
 
 pub struct BatteryInfo {
     cycle_count: Option<u32>,
-    state: State,
+    pub state: State,
     pub state_of_charge: Ratio,
-    state_of_health: Ratio,
+    pub state_of_health: Ratio,
     energy: Energy,
     energy_full_design: Energy,
-    energy_full: Energy,
-    energy_rate: Power,
+    pub energy_full: Energy,
+    pub energy_rate: Power,
     voltage: ElectricPotential,
     technology: Technology,
     temperature: Option<ThermodynamicTemperature>,
     vendor: String,
     model: String,
     serial_no: String,
-    time_to_full: Option<Time>,
-    time_to_empty: Option<Time>,
+    pub time_to_full: Option<Time>,
+    pub time_to_empty: Option<Time>,
 }
 
 impl BatteryInfo {

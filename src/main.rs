@@ -19,6 +19,7 @@ mod dashboard;
 mod history;
 mod suggestion;
 mod about;
+mod graph;
 
 // The application name
 const APPLICATION_NAME: &str = "Prophesy";

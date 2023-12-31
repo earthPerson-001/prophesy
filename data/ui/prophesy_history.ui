@@ -2,13 +2,188 @@
 <!DOCTYPE interface>
 <interface domain="Prophesy">
     <requires lib="gtk" version="4.0" />
+    <object class="GtkAdjustment" id="start_day">
+        <property name="lower">1</property>
+        <property name="upper">14</property>
+        <property name="step-increment">1</property>
+        <property name="page-increment">10</property>
+    </object>
+    <object class="GtkAdjustment" id="end_day">
+        <property name="lower">0</property>
+        <property name="upper">13</property>
+        <property name="step-increment">1</property>
+        <property name="page-increment">10</property>
+    </object>
     <template class="ProphesyHistory" parent="GtkBox">
         <property name="orientation">vertical</property>
         <property name="baseline-position">center</property>
         <child>
-            <object class="GtkLabel">
-                <property name="label">History</property>
+            <object class="GtkBox" id="switches_box">
+                <property name="baseline-position">center</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">20</property>
+                <property name="margin-top">10</property>
+                <property name="margin-bottom">10</property>
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="baseline-position">center</property>
+                        <child>
+                            <object class="GtkLabel" id="show_data_points_label">
+                                <property name="margin-start">10</property>
+                                <property name="margin-end">10</property>
+                                <property name="margin-top">10</property>
+                                <property name="margin-bottom">10</property>
+                                <property name="label">Show Data Points</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSwitch" id="show_data_points">
+                                <property name="margin-start">5</property>
+                                <property name="margin-end">5</property>
+                                <property name="margin-top">10</property>
+                                <property name="margin-bottom">10</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="baseline-position">center</property>
+                        <child>
+                            <object class="GtkLabel"  id="interpolate_data_label">
+                                <property name="margin-start">10</property>
+                                <property name="margin-end">10</property>
+                                <property name="margin-bottom">10</property>
+                                <property name="label">Interpolate Data</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSwitch" id="interpolate_data">
+                                <property name="margin-start">5</property>
+                                <property name="margin-end">5</property>
+                                <property name="margin-top">10</property>
+                                <property name="margin-bottom">10</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
             </object>
         </child>
+        <child>
+            <object class="GtkBox" id="graph_box">
+                <property name="orientation">vertical</property>
+                <child>
+                    <object class="GtkGrid">
+                        <child>
+                            <object class="GtkLabel" id="from_days_earlier_label">
+                                <property name="margin-start">10</property>
+                                <property name="margin-end">10</property>
+                                <property name="label">From(Days Earlier)</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkScale" id="start_day_scale">
+                                <property name="width-request">200</property>
+                                <property name="hexpand">true</property>
+                                <property name="draw-value">True</property>
+                                <property name="adjustment">start_day</property>
+                                <property name="round-digits">1</property>
+                                <property name="digits">0</property>
+                                <property name="value-pos">right</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel" id="to_days_earlier_label">
+                                <property name="margin-start">10</property>
+                                <property name="margin-end">10</property>
+                                <property name="label">To(Days Earlier)</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkScale" id="end_day_scale">
+                                <property name="width-request">200</property>
+                                <property name="hexpand">true</property>
+                                <property name="draw-value">True</property>
+                                <property name="adjustment">end_day</property>
+                                <property name="round-digits">1</property>
+                                <property name="digits">0</property>
+                                <property name="value-pos">right</property>
+                                <layout>
+                                    <property name="column">3</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child>
+                    <object class="ProphesyGraph" id="dashboard_graph">
+                        <property name="margin-top">20</property>
+                        <property name="margin-start">20</property>
+                        <property name="margin-end">20</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="start_day" bind-source="start_day" bind-property="value"
+                            bind-flags="sync-create" />
+                        <property name="end_day" bind-source="end_day" bind-property="value"
+                            bind-flags="sync-create" />
+                        <property name="show_data_points" bind-source="show_data_points"
+                            bind-property="active"
+                            bind-flags="sync-create" />
+                        <property name="interpolate_data" bind-source="interpolate_data"
+                            bind-property="active"
+                            bind-flags="sync-create" />
+                    </object>
+                </child>
+                <style>
+                    <!-- <class name="background-glass" /> -->
+                </style>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="labels_box">
+                <style>
+                    <class name="dashboard_labels" />
+                </style>
+            </object>
+        </child>
+        <object class="GtkSizeGroup">
+            <!-- Making all the label sizes consistent -->
+            <widgets>
+                <widget name="show_data_points_label" />
+                <widget name="interpolate_data_label" />
+                <widget name="from_days_earlier_label" />
+                <widget name="to_days_earlier_label" />
+            </widgets>
+        </object>
+        <object class="GtkSizeGroup">
+            <widgets>
+                <widget name="start_day_scale" />
+                <widget name="end_day_scale" />
+            </widgets>
+        </object>
+        <object class="GtkSizeGroup">
+            <widgets>
+                <widget name="show_data_points" />
+                <widget name="interpolate_data" />
+            </widgets>
+        </object>
+        <style>
+            <class name="history-labels-font"/>
+        </style>
     </template>
 </interface>
