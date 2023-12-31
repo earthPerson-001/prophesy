@@ -2,6 +2,7 @@ use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 
+use crate::utils::battery_future_data::get_predicted_data;
 use battery_data_analysis::{battery_plot_pdf, display_error, get_data_from_csv, CairoBackend};
 use glib::Object;
 
@@ -22,6 +23,8 @@ mod imp {
         show_data_points: Cell<bool>,
         #[property(get, set, default_value = false)]
         interpolate_data: Cell<bool>,
+        #[property(get, set, default_value = false)]
+        show_prediction: Cell<bool>,
     }
 
     #[glib::object_subclass]
@@ -59,15 +62,23 @@ mod imp {
                 );
             } else {
                 let maybe_data = get_data_from_csv("E:\\prophesy\\batteryreport.csv");
-                battery_plot_pdf(
-                    backend,
-                    maybe_data.unwrap(),
-                    Some(self.start_day.get()),
-                    Some(self.end_day.get()),
-                    self.show_data_points.get(),
-                    self.interpolate_data.get(),
-                )
-                .unwrap();
+
+                // get the predictions
+                let maybe_predicted_data = get_predicted_data();
+
+                if maybe_predicted_data.is_ok() && maybe_data.is_ok() {
+                    battery_plot_pdf(
+                        backend,
+                        maybe_predicted_data.unwrap(),
+                        maybe_data.unwrap(),
+                        Some(self.start_day.get()),
+                        Some(self.end_day.get()),
+                        self.show_data_points.get(),
+                        self.interpolate_data.get(),
+                        self.show_prediction.get(),
+                    )
+                    .unwrap();
+                }
             }
         }
     }

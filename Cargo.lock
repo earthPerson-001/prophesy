@@ -1148,6 +1148,7 @@ name = "prophesy"
 version = "0.1.0"
 dependencies = [
  "battery-data-analysis",
+ "chrono",
  "glib-build-tools",
  "glob",
  "gtk4",

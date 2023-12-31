@@ -21,7 +21,7 @@
             <object class="GtkBox" id="switches_box">
                 <property name="baseline-position">center</property>
                 <property name="orientation">vertical</property>
-                <property name="spacing">20</property>
+                <property name="spacing">10</property>
                 <property name="margin-top">10</property>
                 <property name="margin-bottom">10</property>
                 <child>
@@ -61,6 +61,28 @@
                         </child>
                         <child>
                             <object class="GtkSwitch" id="interpolate_data">
+                                <property name="margin-start">5</property>
+                                <property name="margin-end">5</property>
+                                <property name="margin-top">10</property>
+                                <property name="margin-bottom">10</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="baseline-position">center</property>
+                        <child>
+                            <object class="GtkLabel" id="show_prediction_label">
+                                <property name="margin-start">10</property>
+                                <property name="margin-end">10</property>
+                                <property name="margin-bottom">10</property>
+                                <property name="label">Show Prediction</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSwitch" id="show_prediction">
                                 <property name="margin-start">5</property>
                                 <property name="margin-end">5</property>
                                 <property name="margin-top">10</property>
@@ -147,6 +169,9 @@
                         <property name="interpolate_data" bind-source="interpolate_data"
                             bind-property="active"
                             bind-flags="sync-create" />
+                        <property name="show_prediction" bind-source="show_prediction"
+                            bind-property="active"
+                            bind-flags="sync-create" />
                     </object>
                 </child>
                 <style>
@@ -168,6 +193,7 @@
                 <widget name="interpolate_data_label" />
                 <widget name="from_days_earlier_label" />
                 <widget name="to_days_earlier_label" />
+                <widget name="show_prediction_label" />
             </widgets>
         </object>
         <object class="GtkSizeGroup">
@@ -180,6 +206,7 @@
             <widgets>
                 <widget name="show_data_points" />
                 <widget name="interpolate_data" />
+                <widget name="show_prediction" />
             </widgets>
         </object>
         <style>
