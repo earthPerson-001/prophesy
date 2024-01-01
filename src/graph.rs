@@ -61,15 +61,14 @@ mod imp {
                     ),
                 );
             } else {
-                let maybe_data = get_data_from_csv("E:\\prophesy\\batteryreport.csv");
-
+                let maybe_data = get_data_from_csv("C:\\Users\\sunny\\Desktop\\5th Sem\\prophesy\\batteryreport.csv");
                 // get the predictions
-                let maybe_predicted_data = get_predicted_data();
+                let maybe_predicted_data = get_predicted_data().unwrap();
 
-                if maybe_predicted_data.is_ok() && maybe_data.is_ok() {
+                if  maybe_data.is_ok() {
                     battery_plot_pdf(
                         backend,
-                        maybe_predicted_data.unwrap(),
+                        maybe_predicted_data,
                         maybe_data.unwrap(),
                         Some(self.start_day.get()),
                         Some(self.end_day.get()),
