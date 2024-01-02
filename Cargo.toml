@@ -16,7 +16,6 @@ starship-battery = "0.8.2"  # since this is used by terminal, it might get updat
 uom = "0.35.0"
 reqwest = { version = "0.11", features = ["json","blocking"] }
 serde = {version = "1.0", features = ["derive"]}
-tokio = { version = "1", features = ["full"] }
 
 [dependencies.battery-data-analysis]
 git = "https://github.com/earthPerson-001/battery-data-analysis"
