@@ -20,6 +20,7 @@ struct Data {
 }
 
 pub fn get_predicted_data(
+    use_neural_network_strictly: bool,
 ) -> Result<HashMap<chrono::DateTime<Utc>, BatteryHistoryRecord>, Box<dyn Error>> {
     let mut predicted_pairs: HashMap<chrono::DateTime<Utc>, BatteryHistoryRecord> = HashMap::new();
     let now: chrono::prelude::DateTime<Utc> = Utc::now();
@@ -55,7 +56,15 @@ pub fn get_predicted_data(
         ]);
     }
 
-    let url = format!("http://localhost:5000/predict?x_log={:?}", x_log.as_slice());
+    let url = format!(
+        "http://localhost:5000/predict?x_log={:?}&method={}",
+        x_log.as_slice(),
+        if use_neural_network_strictly {
+            "neural_network_only"
+        } else {
+            "any"
+        }
+    );
     println!("Sent request: {:?}", url);
     let res = reqwest::blocking::get(url)?;
     let body = res.json::<Data>()?;

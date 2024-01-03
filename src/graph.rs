@@ -29,6 +29,8 @@ mod imp {
         show_prediction: Cell<bool>,
         #[property(get, set, default_value = false)]
         use_logged_values: Cell<bool>,
+        #[property(get, set, default_value = false)]
+        use_neural_network_strictly: Cell<bool>,
     }
 
     #[glib::object_subclass]
@@ -75,7 +77,7 @@ mod imp {
 
                 let maybe_predicted_data = if self.show_prediction.get() {
                     // get the predictions
-                    get_predicted_data()
+                    get_predicted_data(self.use_neural_network_strictly.get())
                 } else {
                     // no predictions
                     Ok(std::collections::HashMap::new())

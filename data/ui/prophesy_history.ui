@@ -113,6 +113,28 @@
                         </child>
                     </object>
                 </child>
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="baseline-position">center</property>
+                        <child>
+                            <object class="GtkLabel" id="use_nerual_network_strictly_label">
+                                <property name="margin-start">10</property>
+                                <property name="margin-end">10</property>
+                                <property name="margin-bottom">10</property>
+                                <property name="label">Use Neural Network Strictly</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSwitch" id="use_neural_network_strictly">
+                                <property name="margin-start">5</property>
+                                <property name="margin-end">5</property>
+                                <property name="margin-top">10</property>
+                                <property name="margin-bottom">10</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
             </object>
         </child>
         <child>
@@ -195,6 +217,9 @@
                             bind-property="active"
                             bind-flags="sync-create" />
                         <property name="use_logged_values" bind-source="use_logged_values"
+                            bind-property="active"
+                            bind-flags="sync-create" />
+                        <property name="use_neural_network_strictly" bind-source="use_neural_network_strictly"
                             bind-property="active"
                             bind-flags="sync-create" />
                     </object>
