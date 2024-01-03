@@ -57,12 +57,13 @@ pub fn get_predicted_data(
         let res = reqwest::blocking::get(url)?;
         let body = res.json::<Data>()?;
         println!("body:{:?}", body.array);
-        // offseting the current data by a day
-
+        
+        current_capacity = battery_status.energy.value + body.array[0][0];
+        
         predicted_pairs.insert(
             now + chrono::Duration::minutes(i * TIME_IN_MINS),
             BatteryHistoryRecord {
-                capacity: body.array[0][0] as i32,
+                capacity: (current_capacity / 3.6) as i32, // converting from Energy[J] to Energy[mWH]
                 date_time: now + chrono::Duration::minutes(i * TIME_IN_MINS),
                 state: if battery_status.state.to_string().eq("discharging") {
                     ChargeState::Discharging
@@ -73,7 +74,7 @@ pub fn get_predicted_data(
                 },
             },
         );
-        current_capacity = battery_status.energy.value + body.array[0][0];
+
         println!(
             "{:?} full, {:?} current",
             battery_status.energy_full.value, current_capacity
