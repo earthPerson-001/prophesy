@@ -61,14 +61,20 @@ mod imp {
                     ),
                 );
             } else {
-                let maybe_data = get_data_from_csv("C:\\Users\\sunny\\Desktop\\5th Sem\\prophesy\\batteryreport.csv");
-                // get the predictions
-                let maybe_predicted_data = get_predicted_data().unwrap();
+                let maybe_data = get_data_from_csv("E:\\prophesy\\batteryreport.csv");
 
-                if  maybe_data.is_ok() {
+                let maybe_predicted_data = if self.show_prediction.get() {
+                    // get the predictions
+                    get_predicted_data()
+                } else {
+                    // no predictions
+                    Ok(std::collections::HashMap::new())
+                };
+
+                if maybe_predicted_data.is_ok() && maybe_data.is_ok() {
                     battery_plot_pdf(
                         backend,
-                        maybe_predicted_data,
+                        maybe_predicted_data.unwrap(),
                         maybe_data.unwrap(),
                         Some(self.start_day.get()),
                         Some(self.end_day.get()),
@@ -76,7 +82,7 @@ mod imp {
                         self.interpolate_data.get(),
                         self.show_prediction.get(),
                     )
-                    .unwrap();
+                    .unwrap()
                 }
             }
         }
