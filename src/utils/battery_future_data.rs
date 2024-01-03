@@ -4,12 +4,12 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use std::error::Error;
 
-use reqwest::header::{CONTENT_LENGTH, COOKIE};
-
-use battery_data_analysis::get_data_from_csv;
+use reqwest;
 
 use crate::utils::battery_realtime_data::BatteryInfo;
 use battery_data_analysis::ChargeState;
+
+const MAX_NUMBER_OF_PREDICTIONS: u8 = 10;
 
 // Deserializable
 #[derive(Deserialize)]
@@ -30,15 +30,20 @@ pub fn get_predicted_data(
     let battery_status = BatteryInfo::new();
     // let data = get_data_from_csv("C:\\Users\\sunny\\Desktop\\5th Sem\\prophesy\\batteryreport..csv").unwrap();
     let mut current_capacity = battery_status.energy.value;
-    const TIME_IN_MINS: i64 = 120;
+    const TIME_IN_MINS: i64 = 60;
     let mut i = 1;
-    while !(current_capacity < 0.0 || current_capacity > battery_status.energy_full.value){
+
+    let mut current_prediction_number = 0;
+
+    while (current_prediction_number < MAX_NUMBER_OF_PREDICTIONS)
+        && !(current_capacity < 0.0 || current_capacity > battery_status.energy_full.value)
+    {
         // println!("{:?}",);
         let x_log = [[
             battery_status.voltage.abs().value,
             battery_status.energy.abs().value,
             battery_status.energy_rate.abs().value,
-            (i*TIME_IN_MINS*60) as f32,
+            (i * TIME_IN_MINS * 60) as f32,
             if battery_status.state.to_string().eq("discharging") {
                 -1.0
             } else if battery_status.state.to_string().eq("charging") {
@@ -55,10 +60,10 @@ pub fn get_predicted_data(
         // offseting the current data by a day
 
         predicted_pairs.insert(
-            now + chrono::Duration::minutes(TIME_IN_MINS),
+            now + chrono::Duration::minutes(i * TIME_IN_MINS),
             BatteryHistoryRecord {
                 capacity: body.array[0][0] as i32,
-                date_time: now + chrono::Duration::hours(24),
+                date_time: now + chrono::Duration::minutes(i * TIME_IN_MINS),
                 state: if battery_status.state.to_string().eq("discharging") {
                     ChargeState::Discharging
                 } else if battery_status.state.to_string().eq("charging") {
@@ -69,10 +74,15 @@ pub fn get_predicted_data(
             },
         );
         current_capacity = battery_status.energy.value + body.array[0][0];
-        println!("{:?} full, {:?} current", battery_status.energy_full.value, current_capacity);
-        i+=1;
+        println!(
+            "{:?} full, {:?} current",
+            battery_status.energy_full.value, current_capacity
+        );
+        i += 1;
+        current_prediction_number += 1;
     }
 
     println!("{:?}", predicted_pairs);
+
     Ok(predicted_pairs)
 }
