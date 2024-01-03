@@ -3,7 +3,9 @@ use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 
 use crate::utils::battery_future_data::get_predicted_data;
-use battery_data_analysis::{battery_plot_pdf, display_error, get_data_from_csv, CairoBackend};
+use battery_data_analysis::{
+    battery_plot_pdf, display_error, get_data_from_csv, get_log_from_csv, CairoBackend,
+};
 use glib::Object;
 
 mod imp {
@@ -25,6 +27,8 @@ mod imp {
         interpolate_data: Cell<bool>,
         #[property(get, set, default_value = false)]
         show_prediction: Cell<bool>,
+        #[property(get, set, default_value = false)]
+        use_logged_values: Cell<bool>,
     }
 
     #[glib::object_subclass]
@@ -63,6 +67,12 @@ mod imp {
             } else {
                 let maybe_data = get_data_from_csv("E:\\prophesy\\batteryreport.csv");
 
+                let maybe_log = if self.use_logged_values.get() {
+                    get_log_from_csv("E:\\prophesy\\battery_log.csv")
+                } else {
+                    Err(std::io::Error::new(std::io::ErrorKind::Other, "Log Not Found!").into())
+                };
+
                 let maybe_predicted_data = if self.show_prediction.get() {
                     // get the predictions
                     get_predicted_data()
@@ -71,18 +81,34 @@ mod imp {
                     Ok(std::collections::HashMap::new())
                 };
 
-                if maybe_predicted_data.is_ok() && maybe_data.is_ok() {
-                    battery_plot_pdf(
-                        backend,
-                        maybe_predicted_data.unwrap(),
-                        maybe_data.unwrap(),
-                        Some(self.start_day.get()),
-                        Some(self.end_day.get()),
-                        self.show_data_points.get(),
-                        self.interpolate_data.get(),
-                        self.show_prediction.get(),
-                    )
-                    .unwrap()
+                if let Ok(data) =  maybe_data{
+                    let all_data = match self.use_logged_values.get() {
+                        true => match self.use_logged_values.get() {
+                            true => match maybe_log {
+                                Ok(log) => data
+                                    .into_iter()
+                                    .chain(log)
+                                    .collect(),
+                                Err(_) => data,
+                            },
+                            false => data,
+                        },
+                        false => data,
+                    };
+
+                    if let Ok(predicted_data) =maybe_predicted_data {
+                        battery_plot_pdf(
+                            backend,
+                            predicted_data,
+                            all_data,
+                            Some(self.start_day.get()),
+                            Some(self.end_day.get()),
+                            self.show_data_points.get(),
+                            self.interpolate_data.get(),
+                            self.show_prediction.get(),
+                        )
+                        .unwrap()
+                    }
                 }
             }
         }

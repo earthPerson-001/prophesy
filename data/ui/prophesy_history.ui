@@ -91,6 +91,28 @@
                         </child>
                     </object>
                 </child>
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="baseline-position">center</property>
+                        <child>
+                            <object class="GtkLabel" id="use_logged_values_label">
+                                <property name="margin-start">10</property>
+                                <property name="margin-end">10</property>
+                                <property name="margin-bottom">10</property>
+                                <property name="label">Use Logged Values</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSwitch" id="use_logged_values">
+                                <property name="margin-start">5</property>
+                                <property name="margin-end">5</property>
+                                <property name="margin-top">10</property>
+                                <property name="margin-bottom">10</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
             </object>
         </child>
         <child>
@@ -170,6 +192,9 @@
                             bind-property="active"
                             bind-flags="sync-create" />
                         <property name="show_prediction" bind-source="show_prediction"
+                            bind-property="active"
+                            bind-flags="sync-create" />
+                        <property name="use_logged_values" bind-source="use_logged_values"
                             bind-property="active"
                             bind-flags="sync-create" />
                     </object>
