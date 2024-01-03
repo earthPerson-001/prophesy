@@ -9,7 +9,9 @@ use reqwest;
 use crate::utils::battery_realtime_data::BatteryInfo;
 use battery_data_analysis::ChargeState;
 
-const MAX_NUMBER_OF_PREDICTIONS: u8 = 10;
+const MAX_NUMBER_OF_PREDICTIONS: i32 = 10;
+const TIME_IN_MINS: i64 = 60;
+const JOULES_TO_MWHR: f32 = 3.6; // divide by this to convert from Joules to mWH
 
 // Deserializable
 #[derive(Deserialize)]
@@ -28,22 +30,21 @@ pub fn get_predicted_data(
     // time diff,
     // battery state
     let battery_status = BatteryInfo::new();
-    // let data = get_data_from_csv("C:\\Users\\sunny\\Desktop\\5th Sem\\prophesy\\batteryreport..csv").unwrap();
-    let mut current_capacity = battery_status.energy.value;
-    const TIME_IN_MINS: i64 = 60;
-    let mut i = 1;
 
-    let mut current_prediction_number = 0;
+    // predicting all at once
+    // the tiem differences is in seconds
+    let time_differences = (0..=MAX_NUMBER_OF_PREDICTIONS)
+        .map(|i| (i as i64 * TIME_IN_MINS * 60) as f32)
+        .collect::<Vec<f32>>();
 
-    while (current_prediction_number < MAX_NUMBER_OF_PREDICTIONS)
-        && !(current_capacity < 0.0 || current_capacity > battery_status.energy_full.value)
-    {
-        // println!("{:?}",);
-        let x_log = [[
+    // get predictions for those time differences
+    let mut x_log: Vec<[f32; 5]> = Vec::new();
+    for time_difference in time_differences.iter() {
+        x_log.push([
             battery_status.voltage.abs().value,
             battery_status.energy.abs().value,
             battery_status.energy_rate.abs().value,
-            (i * TIME_IN_MINS * 60) as f32,
+            *time_difference,
             if battery_status.state.to_string().eq("discharging") {
                 -1.0
             } else if battery_status.state.to_string().eq("charging") {
@@ -51,20 +52,22 @@ pub fn get_predicted_data(
             } else {
                 0.0
             },
-        ]];
+        ]);
+    }
 
-        let url = format!("http://localhost:5000/predict?x_log={:?}", x_log);
-        let res = reqwest::blocking::get(url)?;
-        let body = res.json::<Data>()?;
-        println!("body:{:?}", body.array);
-        
-        current_capacity = battery_status.energy.value + body.array[0][0];
-        
+    let url = format!("http://localhost:5000/predict?x_log={:?}", x_log.as_slice());
+    println!("Sent request: {:?}", url);
+    let res = reqwest::blocking::get(url)?;
+    let body = res.json::<Data>()?;
+    println!("body:{:?}", body.array);
+
+    for (i, diff) in time_differences.iter().enumerate() {
+        let current_capacity = battery_status.energy.value + body.array[i][0];
         predicted_pairs.insert(
-            now + chrono::Duration::minutes(i * TIME_IN_MINS),
+            now + chrono::Duration::minutes(*diff as i64 / 60), // diff is in seconds
             BatteryHistoryRecord {
-                capacity: (current_capacity / 3.6) as i32, // converting from Energy[J] to Energy[mWH]
-                date_time: now + chrono::Duration::minutes(i * TIME_IN_MINS),
+                capacity: (current_capacity / JOULES_TO_MWHR) as i32, // converting from Energy[J] to Energy[mWH]
+                date_time: now + chrono::Duration::minutes(*diff as i64 / 60),
                 state: if battery_status.state.to_string().eq("discharging") {
                     ChargeState::Discharging
                 } else if battery_status.state.to_string().eq("charging") {
@@ -74,13 +77,6 @@ pub fn get_predicted_data(
                 },
             },
         );
-
-        println!(
-            "{:?} full, {:?} current",
-            battery_status.energy_full.value, current_capacity
-        );
-        i += 1;
-        current_prediction_number += 1;
     }
 
     println!("{:?}", predicted_pairs);
