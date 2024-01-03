@@ -127,7 +127,7 @@ mod imp {
                 battery_status.borrow_mut().update_info();
 
                 // debug
-                battery_status.borrow().print_info();
+                // battery_status.borrow().print_info();
 
 
                 this.obj().set_current_percentage((battery_status.borrow().state_of_charge.abs()*uom::si::f32::Ratio::new::<uom::si::ratio::part_per_hundred>(10000.0)).value);                
